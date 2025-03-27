@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+div h3{
+    color: red;
+}
+
+body > h3{
+    color: aqua;
+}
+
+ul{
+    color: blue;
+    list-style-type: none;
+}
+.b1{
+    background-color: yellow;
+}
+
+#it1 {
+    background-color: aqua;
+}
