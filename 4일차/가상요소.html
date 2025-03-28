@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p::first-line{
+            font-weight: bold;
+            color: blue;
+        }
+
+        P::first-letter{
+            font-size: 2em; color: red;
+        }
+
+        .box::before{
+            content: "news"; font-size: 1.5em; text-transform: uppercase;
+        }
+
+        .box::after{
+            content: "SALE!";
+            font-weight: bold;
+            background-color: tomato;
+            border-radius: 10px;
+            color: white;
+            padding: 2px 5px;
+            text-transform: lowercase;
+        }
+    </style>
+</head>
+<body>
+    <h2>가상 요소 예제</h2>
+    <p>이 문장의 첫 번째 글자와 첫 번째 줄이 특별한 스타일을 가진다</p>
+    <div class="box">이 박스 안의 텍스트트</div>
+</body>
+</html>

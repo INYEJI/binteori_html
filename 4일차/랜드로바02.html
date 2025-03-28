@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*리셋*/
+        body{margin: 0; padding: 0; font-family: "맑은 고딕";}
+        ul,ol,li{list-style:  none; margin: 0; padding: 0;}
+
+        /*헤더*/
+        header{width: 1100px; height: 100px; margin: 0 auto; background-color: gold;}
+        #logo{float: left; width: 130px; height: 70px; margin: 10px 0 0 10px; background-color: green;}
+        #logo > img{width: 100px; height: 100px;}
+        nav{float: right; width: 740px; height: 30px; margin: 30px 30px 0 0; background-color: pink;}
+        nav ul{font-family: "Arial"; font-weight: bold;}
+        nav ul li{float: left; padding: 0 20px;}
+        nav ul li a{text-decoration: none; color: #333;}
+        nav ul li a:hover{color: green;}
+
+        /*slider*/
+        #slider{width: 1100px; height: 450px; margin: 0 auto; background-color: tomato;}
+
+        /*section*/
+        section{width: 1100px; height: 280px; margin: 0 auto; background-color: cyan;}
+        article{float:left; width: 340px; height: 145px; background-color: yellow; margin: 30px 10px;}
+        article h3{margin: 0; font-size: 16px ; height :30px ; width: 100%;}
+        article img{float: left; margin: 0 10px 0 0;}
+        artice h4{margin: 0; font-size: 14px; height: 30px;}
+        article p{font-family: "돋움"; font-size: 12px; color: #666;}
+        article .icon{width: 100px; height: 75px; float: left; max-width: 0 0 0 5px;  text-align: center;}
+        article .icon img{float: left;margin: 0 0 0 20px;}
+        article .icon span{width: 100%; text-align: center; float: left; font-size: 12px; margin: 10px 0 0 0;} 
+
+        /*footer*/
+        footer{width: 1100px; height: 100px; margin: 0 auto; background-color: white;}
+        footer>img{float: left; max-width: 20px 0 0 2px;}
+        footer p{font-family: "돋움"; font-size: 12px; color: #666; margin: 40px 100px 0 0; float: right;}
+    </style>
+</head>
+<body>
+
+    <header>
+        <div id="logo"><img src="./img/logo.jpg"></div>
+        <nav>
+            <ul>
+                <li><a href="#">VEHICLES</a></li>
+                <li><a href="#">PRICE</a></li>
+                <li><a href="#">OFFERS</a></li>
+                <li><a href="#">SECONDHAND CAR</a></li>
+                <li><a href="#">OWERSHIP</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="slider">
+        <img src ="./img/2.jpg">
+    </div>
+    
+    <section>
+        <article>
+            <h3>NEWS</h3>
+            <a href="#"><img src="./img/4.jpg"></a>
+            <h4>Discovery 5</h4>
+            <p>랜드로버가 만든 정통 SUV. 디스커버리의 신형 모델이 다음 달 공개된다.</p>
+        </article>
+        <article>
+            <h3>랜드로버 모델 살펴보기</h3>
+            <a href="#"><img src="./img/8.jpg"</a>
+        </article>
+        <article>
+            <h3>고객지원</h3>
+
+            <div class="icon">
+                <a href="#"><img src="./img/icon3.jpg"></a>
+                <span>시승신청</span>
+            </div>
+            <div class="icon">
+                <a href="#"><img src="./img/icon4.jpg"></a>
+                <span>뉴스레터 신청</span>
+            </div>
+            <div class="icon">
+                <a href="#"><img src="./img/icon5.jpg"></a>
+                <span>전시장 찾기</span> 
+            </div>
+        </article>
+    </section>
+
+    <footer>
+        <img src="./img/logo2.jpg">
+        <P>Jaguar Land Rover Limited: Registrered office: Abbey Road, Whitley, Coventry CV3 4Lf.Registrered in England No:1672070</P>
+    </footer>
+</body>
+</html>
