@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="box-1">
+        <p class="text">text-1</p>
+        <p class="text">text-2</p>
+    </div>
+    <div class="box-2">
+        <p class="text">text-3</p>
+        <p class="text">text-4</p>
+    </div>
+    <script>
+        let el = document.querySelector(".box-1");
+        console.log(el);
+        
+        console.log("-----------------");
+        el = document.getElementsByClassName("box-1");
+
+        console.log("-------------------");
+        el = document.getElementsByClassName("box-1")[0].children;
+        console.log(el);
+        console.log(el[0].textContent);
+
+        console.log("-------------------");
+        el=document.querySelectorAll("box-1.text")
+    </script>
+</body>
+</html>

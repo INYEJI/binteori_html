@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>일정 시간 간격으로 값 증가시키기</h1>
+    <p>콘솔 패널을 열어 확인하세요!</p>
+    <button onclick="clearInterval(auto_1)">증감 정지</button>
+    <button onclick="clearInterval(auto_2)">감소 정지</button>
+    <script>
+        let addNum = 0;
+        let subNum = 1000;
+
+        let auto_1 = setInterval(function(){
+            console.log(addNum++);
+        }, 3000);
+
+        let auto_2 = setInterval(function(){
+            console.log(subNum--);
+        }, 3000);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 100px;
+            height: 100px;
+        }
+        .red-box{
+            background-color: red;
+            position: relative;
+            z-index: 10;
+        }
+        .green-box{
+            background-color: green;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box red-box"></div>
+    <div class="box green-box"></div>
+</body>
+</html>

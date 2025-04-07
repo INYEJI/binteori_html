@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="f1()">네이버</button>
+    <button onclick="f2()">구글</button>
+    <script>
+        function f1(){
+            console.log(window.location.href); 
+            window.location.href = "https://naver.com"; 
+        };
+        function f2(){
+            console.log(window.location.href);
+            window.location.href("https://www.google.com/")
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .red-color{ color: red;}
+    .fz20{font-size: 20px;}
+</style>
+<body>
+    <p id ="text">text</p>
+    <button id="changeStyleBtn">스타일 변경</button>
+    <script>
+        const pEl = document.querySelector("#text");
+        const btn = document.querySelector("#changeStyleBtn");
+        
+        btn.addEventListener("click", function(){
+        pE1.classList.add("red-color");
+        pE1.classList.add("fz20");
+        })
+
+        btn.addEventListener("click", function(){
+        pE1.classList.toggle("red-color");
+        pE1.classList.toggle("fz20");
+        })
+
+
+    </script>
+</body>
+</html>
