@@ -1,0 +1,24 @@
+<!DOCTYPE html >
+<html >
+<head>
+<meta  charset="utf-8" />
+<title> 객체 조작 및 생성 </title>
+<script src="js/jquery-3.2.0.min.js"></script>
+<script>
+
+$(function(){
+  $("#listZone").append("<li>새 내용 추가2</li>");
+  $("<li>새 내용 추가1</li>").prependTo("#listZone");
+
+  /*$("<li>새 내용 추가2</li>").appendTo("#listZone");
+  $("#listZone").prepend("<li>새 내용 추가1</li>");*/
+});
+
+</script>
+</head>
+<body>
+   <ul id="listZone">
+      <li>내용</li>
+   </ul>
+</body>
+</html>

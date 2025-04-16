@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Page Title</title>
+    <style>
+      * {margin:0; }
+      ul,li,ol {list-style:none; margin:0; padding:0;}
+      a {text-decoration:none; color:#666;}
+
+      .menu {margin:50px 0 0 50px; float:left; width:700px; }
+
+      .menu> li {float:left; width:33.3%; text-align:center; line-height:40px; background:#000;}
+      .menu> li > a {color:#fff;}
+      .menu >li:hover {background:#fff;}
+      .menu >li:hover > a {color:#000;}
+
+
+      .sub {background:#ccc; display:none;}
+      .sub >li:hover {background:gold; }
+
+    </style>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+
+    <script>
+      $(function(){
+        $('.menu>li').mouseover(function(){
+          $(this).children('.sub').stop().slideDown();
+        }).mouseout(function(){
+          $('.sub').stop().slideUp();
+        });
+      });
+
+    </script>
+  </head>
+  <body>
+
+    <nav>
+      <ul class="menu">
+        <li><a href="#">강원도</a></li>
+        <li><a href="#">경기도</a>
+          <ul class="sub">
+            <li><a href="#">수원시</a></li>
+            <li><a href="#">안산시</a></li>
+            <li><a href="#">화성시</a></li>
+          </ul>
+        </li>
+        <li><a href="#">경상북도</a>
+          <ul class="sub">
+            <li><a href="#">안동시</a></li>
+            <li><a href="#">포항시</a></li>
+            <li><a href="#">경주시</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+  </body>
+</html>
+

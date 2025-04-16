@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery</title>
+    <script src="js/jquery-3.2.0.min.js"></script>
+    <script>
+      $( document ).ready( function() {
+        $('button').click(function(){
+         $( 'h1' ).offset( { left: 100, top: 1250 } );
+        });
+      } );
+    </script>
+
+  </head>
+
+  <body>
+    <button>click</button>
+    <h1>Lorem</h1>
+  </body>
+
+</html>

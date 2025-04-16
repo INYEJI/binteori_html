@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title> 이벤트 </title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+<script>
+$(function(){
+   $("#btn1").mouseover(function(){
+      $("p").css("background-color","yellow");
+   });
+   $("#btn1").mouseout(function(){
+      $("p").css("background-color","purple");
+   });
+
+   $("#btn2").hover(function(){
+      $("p").css("background-color","yellow");
+   },function(){
+      $("p").css("background-color","purple");
+   });
+});
+</script>
+</head>
+<body>
+   <button id="btn1">mouseover/out</button>
+   <button id="btn2">hover</button>
+   <p>내용</p>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html>
+
+  <head>
+
+    <title>Page Title</title>
+
+
+
+
+
+    <style>
+
+      * {margin:0; box-sizing:border-box;}
+
+
+
+      #wrap {width:500px; height:650px; border:1px solid #666; margin:0 auto; padding:20px;}
+
+      #box1 {width:100%; height:550px; background-color:gold; text-align:center;}
+
+
+
+
+
+
+
+      #box2 {width:100%; height:550px; background-color:tomato; text-align:center; display:none;}
+
+
+
+
+
+      #box3 {width:100%; height:550px; background-color:purple; text-align:center; display:none;}
+
+
+
+      img {width:200px; height:200px; }
+
+
+
+      .textbox {width:80%; height:250px; text-align:left; margin:20px auto 0px; background-color:#fff;}
+
+
+
+      .textbox > h1 {font-size:25px;}
+
+      .textbox > h3 {font-size:17px;}
+
+      .textbox > p {font-size:13px;}
+
+
+
+      button {width:100px; height:50px; margin:20px;}
+
+    </style>
+
+
+
+
+
+
+
+
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js">    </script>
+
+
+
+
+
+    <script>
+
+      $(document).ready(function(){
+
+        $("button:nth-of-type(1)").click(function(){
+
+          $("#box1").fadeIn();
+
+          $("#box2").hide();
+
+          $("#box2").hide();          
+
+        });
+
+
+
+
+
+
+
+        $("button:nth-of-type(2)").click(function(){
+
+          $("#box2").fadeIn();
+
+          $("#box1").hide();
+
+          $("#box3").hide();          
+
+        });
+
+
+
+
+
+
+
+        $("button:nth-of-type(3)").click(function(){
+
+          $("#box3").fadeIn();
+
+          $("#box1").hide();
+
+          $("#box2").hide();          
+
+        });
+
+
+
+      });
+
+
+
+    </script>
+
+
+
+  </head>
+
+  <body>
+
+
+
+    <div id="wrap">
+
+
+
+
+
+      <div id="box1">
+
+
+
+        <img src="https://t1.daumcdn.net/liveboard/ziksir/761e847fe8604649be483432ad478c54.jpg" alt="이순신장군">
+
+
+
+        <div class="textbox">
+
+          <h1>이순신장군</h1>
+
+          <h3>1545(인종 1)∼1598(선조 31). 조선 중기의 명장.</h3>
+
+          <p> 본관은 덕수(德水). 자는 여해(汝諧). 고려 때 중랑장을 지낸 이돈수(李敦守)로부터 내려오는 문반(文班)의 가문으로, 이돈수(李敦守)의 12대손이다. 아버지는 이정(李貞)이며, 어머니는 초계 변씨(草溪卞氏)로 변수림(卞守琳)의 딸이다. 서울 건천동(乾川洞: 지금의 중구 인현동 부근)에서 출생하였다.
+
+            이순신의 가문은 4대 때에 조선 왕조로 넘어오면서 두각을 나타낸다. 이순신 [李舜臣] (한국민족문화대백과, 한국학중앙연구원)</p>
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div id="box2">
+
+
+
+        <img src="http://www.insightkorea.co.kr/news/photo/201502/13191_8061_5350.jpeg" alt="세종대왕">
+
+
+
+        <div class="textbox">
+
+          <h1>세종대왕</h1>
+
+          <h3>1397(태조 6)∼1450(세종 32). 조선 제4대 왕.</h3>
+
+          <p> 재위 1418∼1450. 본관은 전주(全州). 이름은 이도(李?), 자는 원정(元正). 태종의 셋째아들이며, 어머니는 원경왕후 민씨(元敬王后閔氏)이다. 비는 심온(沈溫)의 딸 소헌왕후(昭憲王后)이다.
+
+            1408년(태종 8) 충녕군(忠寧君)에 봉해지고, 1412년 충녕대군에 진봉(進封)되었으며, 1418년 6월 왕세자에 책봉되었다가 같은 해 8월에 태종의 양위를 받아 즉위하였다.
+
+            세종 [世宗] (한국민족문화대백과, 한국학중앙연구원)
+
+          </p> 
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+      <div id="box3">
+
+
+
+        <img src="https://w.namu.la/s/ee04e32a6e602425c970c7540a22eb684a45727aff176b564cb8d5a52c28e5cf05b3e714d44281fab6e09f70d0918c9f9f51079f9f37e2d3bf197fab967a59c7885f5e01b76f96163ac594b9975fb52cf8671304285300328723880440bb75edbe671247ade21efcb831332a4d8737ab" alt="광개토대왕">
+
+
+
+        <div class="textbox">
+
+          <h1>광개토대왕</h1>
+
+          <h3>우리 민족 최고의 정복왕 (廣開土大王, 374~412, 재위 391∼412)</h3>
+
+          <p> 이름은 담덕(談德)이며, 고국양왕(故國壤王)의 아들이다. 소수림왕의 정치적 안정을 기반으로 최대의 영토를 확장한 정복 군주로서 완전한 묘호는 국강상광개토경평안호태왕(國岡上廣開土境平安好太王)이다. 이를 줄여서 광개토태왕(廣開土太王)으로 부르기도 하나, 일반적으로 광개토대왕(廣開土大王)을 더 많이 사용하고 있다. 재위시의 칭호는 영락대왕(永樂大王)이었는데, '영락(永樂)'은 한국에서 사용된 최초의 연호로 알려져 있다. 광개토대왕 [廣開土大王] (두산백과)
+
+
+
+            )</p>
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <button>이순신장군</button>
+
+
+
+      <button>세종대왕</button>
+
+
+
+      <button>광개토대왕</button>
+
+
+
+
+
+    </div>
+
+
+
+  </body>
+
+</html>
+
+

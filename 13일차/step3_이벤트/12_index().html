@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title> 이벤트 </title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+<script>
+$(function(){
+   $("#menu a").mouseover(function(){ 
+      $("#menu a").css("background","none"); 
+
+     
+      $(this).css("background","yellow");
+
+      var num=$("#menu a").index(this);
+      $(".txt").text(num);
+   });
+});
+
+</script>
+</head>
+<body>
+  <ul id="menu">
+    <li><a href="#">내용1</a></li>
+    <li><a href="#">내용2</a></li>
+    <li><a href="#">내용3</a></li>
+    <li><a href="#">내용4</a></li>
+  </ul>
+  <p class="txt"></p>
+</body>
+</html>

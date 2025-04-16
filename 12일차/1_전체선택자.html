@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        //전체 요소에 파란색 1px 두께의 실선을 생성한다.
+        //$(function(){$("*").css("border","1px solid blue")});
+        document.addEventListener('DOMContentLoaded',
+            function(){
+                document.querySelectorAll('*').
+                forEach(function(el) {
+                    el.style.border = '1px solid blue';
+                });
+            });
+    </script>
+</head>
+<body>
+    <h1>제이쿼리</h1>
+    <h2>직접 선택자 및 관계 선택자</h2>
+    <h3>직접 선택자</h3>
+    <h4>관계 선택자</h4>
+</body>
+</html>

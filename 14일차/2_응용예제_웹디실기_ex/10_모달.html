@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <title></title>
+
+    <style>
+
+
+
+
+
+    #sbox{width: 200px; height: 50px; background-color: tomato; cursor:pointer;}
+
+    
+
+    
+
+    #popup { width:300px; height:200px; border:3px solid #ddd; background:#fff; border-radius:10px; display: none;  position:absolute; top:50%; left:50%; margin-top: -100px; margin-left:-150px; display:flex; flex-flow:column nowrap; text-align:center;}
+
+    
+
+    #popup > button {margin:0 20px; background-color:#ccc; border:0;  cursor:pointer; padding:5px 0px; }
+
+
+
+
+
+    </style>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
+    <script>
+
+  $(document).ready(function(){
+
+
+
+      /* 이미지 클릭시 정중앙 팝업창 열기/닫기 */
+
+    $("#sbox").click(function(){
+
+      $("#popup").fadeIn();
+
+    });
+
+    $("#popup>button").click(function(){
+
+      $("#popup").fadeOut();
+
+    });
+
+
+
+  });
+
+    </script>
+
+
+
+
+
+  </head>
+
+  <body>
+
+    <div id="sbox"> <h6>누르면 popup</h6></div>
+
+
+
+    <div id="popup">
+
+      <h2>공지</h2>
+
+      <p>사이트 서버 점검으로<br> 10:00~18:00까지<br> 서비스 중지됩니다.</p>
+
+      <button>닫기</button>
+
+    </div>
+
+
+
+
+
+  </body>
+
+</html>
+

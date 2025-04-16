@@ -1,0 +1,20 @@
+<!DOCTYPE html >
+<html >
+<head>
+<meta charset="utf-8" />
+<title> 객체 조작 및 생성 </title>
+<script src="js/jquery-3.2.0.min.js"></script>
+<script>
+$(function(){
+  $("<li>새 내용 추가1</li>").insertBefore("#myList");
+  var copy_obj=$("#myList").clone();
+  $(copy_obj).insertAfter("#myList");
+});
+</script>
+</head>
+<body>
+<ul>
+  <li id="myList">내용</li>
+</ul>
+</body>
+</html>

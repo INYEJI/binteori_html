@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+
+
+  <head>
+
+
+
+    <title>Page Title</title>
+
+
+
+    <style>
+
+
+
+      * {margin:0; }
+
+
+
+      ul,li,ol {list-style:none; margin:0; padding:0;}
+
+
+
+      a {text-decoration:none; color:#666;}
+
+
+
+
+
+      .menu {margin:50px 0 0 50px; float:left; width:200px; }
+
+      .menu> li { text-align:center; line-height:40px; background:#000; position:relative;}
+
+      .menu> li > a {color:#fff; display:block;}
+
+      .menu >li:hover {background:#fff;}
+
+      .menu >li:hover > a {color:#000;}
+
+
+
+
+
+      .sub {width:100%; background:#ccc; display:none; position:absolute; top:0px; left:200px; width:150px; z-index:3;}
+
+      .sub >li:hover {background:gold; display:block; }
+
+
+
+
+
+
+
+    </style>
+
+
+
+
+
+
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+
+
+
+      $(function(){
+
+        $('.menu > li').mouseenter(function(){
+
+          $(this).find('.sub').stop().fadeIn();
+
+        }).mouseleave(function(){
+
+          $('.sub').stop().hide();
+
+        }) ;
+
+      });
+
+
+
+
+
+    </script>
+
+
+
+  </head>
+
+
+
+  <body>
+
+
+
+
+
+    <nav>
+
+
+
+      <ul class="menu">
+
+        <li><a href="#">강원도</a>
+
+          <ul class="sub">
+
+            <li><a href="#">삼척시</a></li>
+
+            <li><a href="#">동해시</a></li>
+
+            <li><a href="#">태백시</a></li>
+
+          </ul>
+
+        </li>
+
+        <li><a href="#">경기도</a>
+
+          <ul class="sub">
+
+            <li><a href="#">수원시</a></li>
+
+            <li><a href="#">안산시</a></li>
+
+            <li><a href="#">화성시</a></li>
+
+          </ul>
+
+        </li>
+
+        <li><a href="#">경상북도</a>
+
+          <ul class="sub">
+
+            <li><a href="#">안동시</a></li>
+
+            <li><a href="#">포항시</a></li>
+
+            <li><a href="#">경주시</a></li>
+
+          </ul>
+
+        </li>
+
+      </ul>
+
+    </nav>
+
+
+
+  </body>
+
+
+
+</html>
+

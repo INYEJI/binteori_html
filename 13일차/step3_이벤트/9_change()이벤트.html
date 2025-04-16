@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta  charset="utf-8" />
+<title> 이벤트 </title>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+<script>
+$(function(){
+   $("#rel_site").change(function(){
+      $("#txt").text($(this).val());
+   });
+});
+</script>
+</head>
+<body>
+   <select id="rel_site">
+      <option value="">사이트 선택</option>
+      <option value="www.naver.com">네이버</option>
+      <option value="www.nate.com">네이트</option>
+      <option value="www.daum.net">다음</option>
+   </select>
+   <p id="txt"></p>
+</body>
+</html>

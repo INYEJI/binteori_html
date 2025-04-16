@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="https://www.gilbut.co.kr">길벗</a>
+    <script>
+        const aE1 = document.querySelector("a");
+        const href = aE1.getAttribute("href");
+        aE1.setAttribute("href", "https://www.sucoding.kr");
+        aE1.innerText = "수코딩";
+        aE1.setAttribute("target","_blank");
+        console.log(href);
+    </script>
+</body>
+</html>
