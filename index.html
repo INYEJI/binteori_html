@@ -180,6 +180,31 @@
     </table>
   </div>
 
+  <!-- 11번가 재고 파일 업로드 -->
+  <div class="card">
+    <div class="card-title">🏬 11번가 재고 파일 업데이트</div>
+    <div class="info-box">
+      11번가 셀러어드민에서 다운받은 <strong>ExcelStockList .xls/.xlsx</strong> 파일을 올리면
+      SKU명과 정상실재고를 파싱해서 완성품 재고를 자동으로 업데이트합니다.
+    </div>
+    <div class="drop-zone" id="drop-11st" onclick="document.getElementById('file-11st').click()" style="margin-bottom:10px">
+      <input type="file" id="file-11st" accept=".xlsx,.xls" style="display:none" onchange="handle11stFile(this)">
+      <div id="drop-11st-label">📂 11번가 재고 파일 클릭 또는 드래그</div>
+    </div>
+    <div id="11st-preview" style="display:none; margin-bottom:10px">
+      <div class="section-title">파싱 결과 미리보기</div>
+      <table>
+        <thead><tr><th>SKU명</th><th>정상실재고</th><th>매핑</th><th>현재재고</th></tr></thead>
+        <tbody id="11st-tbody"></tbody>
+      </table>
+      <div style="margin-top:10px; display:flex; gap:10px">
+        <button class="btn btn-success" onclick="apply11stStock()">✅ 재고 업데이트 적용</button>
+        <button class="btn" style="background:#eee;color:#555" onclick="reset11st()">🔄 초기화</button>
+      </div>
+    </div>
+    <div id="11st-alert"></div>
+  </div>
+
   <div class="card">
     <div class="card-title">⚠️ 부족 원부자재 알림</div>
     <div id="warn-materials"></div>
@@ -1185,6 +1210,151 @@ function updateSalePreview() {
   if (!key || !qty) { preview.textContent = ''; return; }
   const item = finishedStock[key];
   if (item) preview.textContent = `→ ${item.name} ${item.qty}입 × ${qty}박스 = 총 ${item.qty * qty}봉 차감`;
+}
+
+// ═══════════════════════════════════════════
+// 11번가 재고 파일 파싱
+// ═══════════════════════════════════════════
+
+// SKU명 → finishedStock 키 매핑
+function map11stSKU(skuName) {
+  const name = (skuName || '').toString().trim();
+
+  // 300g 파우더
+  if (/300g|300G/.test(name) && /(파우더|가루)/.test(name)) {
+    const m = name.match(/(\d+)(개|입|봉)/);
+    const qty = m ? parseInt(m[1]) : 1;
+    return 'powder300_' + qty;
+  }
+  // 500g 파우더
+  if (/500g|500G/.test(name) && /(파우더|가루)/.test(name)) {
+    const m = name.match(/(\d+)(개|입|봉)/);
+    const qty = m ? parseInt(m[1]) : 1;
+    return 'powder500_' + qty;
+  }
+  // 베이비 리마빈 500g 원물
+  if (/(리마빈|리마콩|라마빈)/.test(name) && /500g|500G/.test(name) && !/(파우더|가루)/.test(name)) {
+    const m = name.match(/(\d+)(개|입|봉)/);
+    const qty = m ? parseInt(m[1]) : 1;
+    return 'lima500_' + qty;
+  }
+  // 블랙퀴노아
+  if (/블랙퀴노아|블랙 퀴노아/.test(name)) return 'black_quinoa_1';
+  // 레드퀴노아
+  if (/레드퀴노아|레드 퀴노아/.test(name)) return 'red_quinoa_1';
+  // 블랙아이즈빈
+  if (/블랙아이즈빈|블랙 아이즈빈/.test(name)) return 'black_eyes_1';
+  // 4종 선물세트
+  if (/4종/.test(name)) return 'gift_set_4';
+  // 2종 선물세트
+  if (/2종/.test(name)) return 'gift_set_2';
+
+  return null;
+}
+
+let parsed11st = [];
+
+function handle11stFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const zone = document.getElementById('drop-11st');
+  document.getElementById('drop-11st-label').textContent = '📄 ' + file.name;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const wb = XLSX.read(data, { type: 'array' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+
+      // 헤더 찾기
+      const headerIdx = rows.findIndex(r => r.some(c => String(c).includes('SKU명')));
+      if (headerIdx < 0) throw new Error('SKU명 컬럼을 찾을 수 없어요');
+      const header = rows[headerIdx];
+      const skuCol    = header.findIndex(c => String(c).includes('SKU명'));
+      const stockCol  = header.findIndex(c => String(c).includes('정상실재고'));
+
+      parsed11st = [];
+      for (let i = headerIdx + 1; i < rows.length; i++) {
+        const skuName = String(rows[i][skuCol] || '').trim();
+        const stock   = parseInt(rows[i][stockCol]) || 0;
+        if (!skuName) continue;
+        const key = map11stSKU(skuName);
+        parsed11st.push({ skuName, stock, key });
+      }
+
+      zone.classList.add('done');
+      show11stPreview();
+    } catch(err) {
+      zone.classList.add('error');
+      document.getElementById('11st-alert').innerHTML = `<div class="alert alert-danger">❌ 파싱 오류: ${err.message}</div>`;
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function show11stPreview() {
+  document.getElementById('11st-preview').style.display = 'block';
+  const tbody = document.getElementById('11st-tbody');
+  tbody.innerHTML = '';
+  for (const item of parsed11st) {
+    const current = item.key && finishedStock[item.key] ? finishedStock[item.key].stock : '-';
+    const mapped  = item.key ? `<span style="color:#27AE60;font-weight:600">${item.key}</span>` : `<span style="color:#888">매핑 없음</span>`;
+    const changed = item.key && finishedStock[item.key] && finishedStock[item.key].stock !== item.stock;
+    const tr = document.createElement('tr');
+    tr.style.background = !item.key ? '#f9f9f9' : changed ? '#fffde7' : '#f0faf0';
+    tr.innerHTML = `<td class="td-left">${item.skuName}</td>
+      <td style="font-weight:700">${item.stock.toLocaleString()}</td>
+      <td>${mapped}</td>
+      <td style="color:${changed?'#E67E22':'#888'}">${current}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+async function apply11stStock() {
+  const updates = [];
+  const applied = [];
+  for (const item of parsed11st) {
+    if (!item.key || !finishedStock[item.key]) continue;
+    finishedStock[item.key].stock = item.stock;
+    updates.push({ sheet: 'finished', key: item.key, stock: item.stock });
+    applied.push(`${finishedStock[item.key].name} ${finishedStock[item.key].qty}입 → ${item.stock.toLocaleString()}박스`);
+  }
+
+  const now = new Date().toLocaleString('ko-KR');
+  const histEntry = { time: now, type: 'sync', desc: `[11번가 동기화] ${applied.length}개 SKU 재고 업데이트` };
+  history.unshift({ type: 'mat', time: now, desc: histEntry.desc });
+  await saveToSheet(updates, histEntry);
+
+  document.getElementById('11st-alert').innerHTML = `<div class="alert alert-success">✅ ${applied.length}개 SKU 재고 업데이트 완료!</div>`;
+  document.getElementById('11st-preview').style.display = 'none';
+  reset11st();
+  renderDashboard();
+  renderSales();
+}
+
+function reset11st() {
+  parsed11st = [];
+  document.getElementById('drop-11st').className = 'drop-zone';
+  document.getElementById('drop-11st-label').textContent = '📂 11번가 재고 파일 클릭 또는 드래그';
+  document.getElementById('file-11st').value = '';
+  document.getElementById('11st-preview').style.display = 'none';
+}
+
+// 드래그앤드롭
+const zone11 = document.getElementById('drop-11st');
+if (zone11) {
+  zone11.addEventListener('dragover', e => { e.preventDefault(); zone11.classList.add('dragover'); });
+  zone11.addEventListener('dragleave', () => zone11.classList.remove('dragover'));
+  zone11.addEventListener('drop', e => {
+    e.preventDefault(); zone11.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) {
+      document.getElementById('file-11st').files = e.dataTransfer.files;
+      handle11stFile(document.getElementById('file-11st'));
+    }
+  });
 }
 
 // ═══════════════════════════════════════════
