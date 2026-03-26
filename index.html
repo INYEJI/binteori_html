@@ -1,208 +1,1246 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Final Project</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="style2.css">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>라라마켓 재고관리 시스템</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Malgun Gothic', Arial, sans-serif; background: #f0f4f8; color: #1a1a1a; font-size: 13px; }
 
+  /* 헤더 */
+  .header { background: linear-gradient(135deg, #2D5F8A, #4A90D9); color: white; padding: 16px 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .header .date { font-size: 12px; opacity: 0.8; margin-left: auto; }
+
+  /* 탭 */
+  .tabs { display: flex; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 0 24px; gap: 4px; }
+  .tab { padding: 12px 20px; cursor: pointer; border-bottom: 3px solid transparent; font-weight: 600; color: #888; transition: all 0.2s; font-size: 13px; }
+  .tab.active { color: #2D5F8A; border-bottom-color: #2D5F8A; }
+  .tab:hover { color: #2D5F8A; background: #f5f9ff; }
+
+  /* 콘텐츠 */
+  .content { display: none; padding: 20px 24px; }
+  .content.active { display: block; }
+
+  /* 카드 */
+  .card { background: white; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
+  .card-title { font-size: 14px; font-weight: 700; color: #2D5F8A; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #e8f4fd; display: flex; align-items: center; gap: 6px; }
+
+  /* 그리드 */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  /* 재고 요약 카드 */
+  .stat-card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 4px solid #2D5F8A; }
+  .stat-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .stat-value { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .stat-unit { font-size: 11px; color: #888; margin-left: 4px; }
+  .stat-sub { font-size: 11px; color: #4A90D9; margin-top: 2px; }
+
+  /* 테이블 */
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { background: #2D5F8A; color: white; padding: 8px 10px; text-align: center; font-weight: 600; white-space: nowrap; }
+  td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; text-align: center; }
+  tr:hover td { background: #f5f9ff; }
+  .td-left { text-align: left; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+  .badge-blue { background: #e8f4fd; color: #2D5F8A; }
+  .badge-yellow { background: #fef9e7; color: #8B6914; }
+  .badge-green { background: #e8f8e8; color: #27AE60; }
+  .badge-red { background: #fde8e8; color: #CC0000; }
+
+  /* 폼 */
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; display: block; }
+  .form-control { width: 100%; padding: 8px 12px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 13px; outline: none; transition: border 0.2s; font-family: inherit; }
+  .form-control:focus { border-color: #4A90D9; }
+  select.form-control { background: white; cursor: pointer; }
+
+  /* 버튼 */
+  .btn { padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .btn-primary { background: #2D5F8A; color: white; }
+  .btn-primary:hover { background: #1a3d5c; }
+  .btn-success { background: #27AE60; color: white; }
+  .btn-success:hover { background: #1e8449; }
+  .btn-danger { background: #CC0000; color: white; }
+  .btn-danger:hover { background: #990000; }
+  .btn-sm { padding: 5px 12px; font-size: 11px; }
+
+  /* 알림 */
+  .alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; }
+  .alert-success { background: #e8f8e8; color: #27AE60; border-left: 3px solid #27AE60; }
+  .alert-danger { background: #fde8e8; color: #CC0000; border-left: 3px solid #CC0000; }
+  .alert-warning { background: #fef9e7; color: #8B6914; border-left: 3px solid #F0B429; }
+
+  /* 재고바 */
+  .stock-bar { background: #eee; border-radius: 4px; height: 6px; margin-top: 4px; overflow: hidden; }
+  .stock-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+
+  /* 이력 */
+  .log-item { padding: 8px 12px; border-left: 3px solid #4A90D9; background: #f5f9ff; border-radius: 0 6px 6px 0; margin-bottom: 6px; font-size: 12px; }
+  .log-item.log-prod { border-left-color: #27AE60; background: #f0faf0; }
+  .log-item.log-sale { border-left-color: #E67E22; background: #fef5ec; }
+  .log-time { font-size: 10px; color: #888; }
+
+  .section-title { font-size: 12px; font-weight: 700; color: #555; margin: 14px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .highlight { color: #CC0000; font-weight: 700; }
+  .good { color: #27AE60; font-weight: 700; }
+
+  /* 반응형 info 박스 */
+  .info-box { background: #e8f4fd; border: 1px solid #b3d4f0; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #2D5F8A; margin-bottom: 14px; }
+  .warn-box { background: #fef9e7; border: 1px solid #f0d060; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #8B6914; }
+  .subtab { padding:8px 18px; border:1.5px solid #ddd; border-radius:20px; background:white; color:#888; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:inherit; }
+  .subtab.active { background:#2D5F8A; color:white; border-color:#2D5F8A; }
+  .subtab:hover:not(.active) { border-color:#4A90D9; color:#2D5F8A; }
+  .drop-zone { border: 2px dashed #b3d4f0; border-radius: 8px; padding: 22px; text-align: center; cursor: pointer; color: #4A90D9; font-size: 12px; font-weight: 600; transition: all 0.2s; background: #f5f9ff; }
+  .drop-zone:hover, .drop-zone.dragover { background: #e8f4fd; border-color: #2D5F8A; }
+  .drop-zone.done { background: #e8f8e8; border-color: #27AE60; color: #27AE60; }
+  .drop-zone.error { background: #fde8e8; border-color: #CC0000; color: #CC0000; }
+  .file-status { font-size: 11px; margin-top: 5px; min-height: 16px; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
 <body>
 
-    <header>
-        <div class="container">
-            <h1><button data-animation-scroll="true" data-target="#main">SU</button></h1>
-            <nav>
-                <ul>
-                    <li>
-                        <button data-animation-scroll="true" data-target="#about">About</button>
-                    </li>
-                    <li>
-                        <button data-animation-scroll="true" data-target="#features">Features</button>
-                    </li>
-                    <li>
-                        <button data-animation-scroll="true" data-target="#portfolio">Portfolio</button>
-                    </li>
-                    <li>
-                        <button data-animation-scroll="true" data-target="#contact">Contact</button>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+<!-- 구글 시트 연동 설정 배너 -->
+<div id="setup-banner" style="background:#fff3cd;border-bottom:2px solid #f0b429;padding:10px 24px;font-size:12px;display:flex;align-items:center;gap:12px">
+  <span>⚙️ <strong>구글 시트 미연동</strong> — Apps Script URL을 입력하면 데이터가 영구 저장됩니다.</span>
+  <input id="script-url-input" type="text" placeholder="https://script.google.com/macros/s/..." 
+    style="flex:1;padding:5px 10px;border:1px solid #ddd;border-radius:4px;font-size:12px;font-family:inherit">
+  <button onclick="connectSheet()" style="padding:5px 14px;background:#2D5F8A;color:white;border:none;border-radius:4px;font-size:12px;cursor:pointer;font-weight:600">연결</button>
+  <button onclick="document.getElementById('setup-banner').style.display='none'" style="padding:5px 10px;background:#eee;border:none;border-radius:4px;font-size:12px;cursor:pointer">닫기</button>
+</div>
 
-    <main id="main">
-        <div class="container">
-            <h4>Welcome</h4>
-            <h2>I'M A <span></span></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc luctus, pharetra mi ac, laoreet quam. Aliquam tristique ullamcorper diam, et mollis massa sagittis ut. Vivamus vitae laoreet odio.</p>
-            <button class="download">DOWNLOAD CV</button>
-            <button class="mouse"><i class="fa-solid fa-computer-mouse"></i></button>
-        </div>
-    </main>
+<div class="header">
+  <div>📦</div>
+  <h1>라라마켓 재고관리 시스템</h1>
+  <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
+    <div id="sync-status" style="font-size:11px;opacity:0.8">⚪ 로컬 모드</div>
+    <button onclick="refreshFromSheet()" style="padding:4px 10px;background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.4);border-radius:4px;font-size:11px;cursor:pointer">🔄 새로고침</button>
+    <div class="date" id="currentDate"></div>
+  </div>
+</div>
+<!-- 로딩 오버레이 -->
+<div id="loading" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.3);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:white;padding:24px 36px;border-radius:12px;font-size:14px;font-weight:600;color:#2D5F8A">🔄 구글 시트 동기화 중...</div>
+</div>
 
-    <section id="about" class="about">
-        <div class="container">
-            <div class="title">
-                <h4>Who Am I</h4>
-                <h2>About Me</h2>
-            </div>
-            <div class="about-self">
-                <div class="left">
-                    <img src="https://pensive-kowalevski-fdf325.netlify.app/images/me_alone.jpg" alt="">
-                </div>
-                <div class="right">
-                    <h3>Hello, <strong>I'm Sucoding</strong></h3>
-                    <p>I'm Web Publisher And Web Front-End Developer.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc luctus</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc luctus</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc luctus</p>
-                    <div class="social">
-                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-twitch"></i></a>   
-                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="features" class="do">
-        <div class="container">
-            <div class="title">
-                <h4>Features</h4>
-                <h2>What I Do</h2>
-            </div>
-            <div class="do-me">
-                <div class="do-inner">
-                    <div class="icon">
-                        <i class="fa-brands fa-html5"></i>
-                    </div>
-                    <div class="content">
-                        <h3>HTML5</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc luctus, pharetra mi ac, laoreet quam. Aliquam tristique ullamcorper diam, et mollis massa sagittis ut.</p>
-                    </div>
-                </div>
-                <div class="do-inner">
-                    <div class="icon">
-                        <i class="fa-brands fa-css3-alt"></i>
-                    </div>
-                    <div class="content">
-                        <h3>CSS3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc luctus, pharetra mi ac, laoreet quam. Aliquam tristique ullamcorper diam, et mollis massa sagittis ut.</p>
-                    </div>
-                </div>
-                <div class="do-inner">
-                    <div class="icon">
-                        <i class="fa-brands fa-bootstrap"></i>
-                    </div>
-                    <div class="content">
-                        <h3>BootStrap v5.0</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc luctus, pharetra mi ac, laoreet quam. Aliquam tristique ullamcorper diam, et mollis massa sagittis ut.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <div class="bg"></div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('dashboard')">📊 재고 현황</div>
+  <div class="tab" onclick="switchTab('production')">🏭 생산 입력</div>
+  <div class="tab" onclick="switchTab('sales')">🛒 판매 입력</div>
+  <div class="tab" onclick="switchTab('materials')">🧱 원부자재</div>
+  <div class="tab" onclick="switchTab('history')">📋 이력</div>
+</div>
 
-    <section id="portfolio" class="portfolio">
-        <div class="container">
-            <div class="title">
-                <h4>PORTFOLIOBACK</h4>
-                <h2>Portfolio</h2>
-            </div>
-            <div class="portfolio-me">
-                <div class="portfolio-inner">
-                    <img src="https://pensive-kowalevski-fdf325.netlify.app/images/mock1.png" alt="샘플이미지">
-                    <strong>BRANDING</strong>
-                    <h3>Package Design</h3>
-                </div>
-                <div class="portfolio-inner">
-                    <img src="https://pensive-kowalevski-fdf325.netlify.app/images/mock2.png" alt="샘플이미지">
-                    <strong>DEVELOPMENT</strong>
-                    <h3>Tablet App Dev</h3>
-                </div>
-                <div class="portfolio-inner">
-                    <img src="https://pensive-kowalevski-fdf325.netlify.app/images/mock3.png" alt="샘플이미지">
-                    <strong>MARKETING</strong>
-                    <h3>Coka Cola</h3>
-                </div>
-                <div class="portfolio-inner">
-                    <img src="https://pensive-kowalevski-fdf325.netlify.app/images/mock4.png" alt="샘플이미지">
-                    <strong>APP</strong>
-                    <h3>Facebook Clone</h3>
-                </div>
-                <div class="portfolio-inner">
-                    <img src="https://pensive-kowalevski-fdf325.netlify.app/images/mock5.png" alt="샘플이미지">
-                    <strong>APP</strong>
-                    <h3>Nefilx Clone</h3>
-                </div>
-                <div class="portfolio-inner">
-                    <img src="https://pensive-kowalevski-fdf325.netlify.app/images/mock6.png" alt="샘플이미지">
-                    <strong>WEB</strong>
-                    <h3>FirmBee Web</h3>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- ══════════════════ 탭1: 재고 현황 ══════════════════ -->
+<div id="tab-dashboard" class="content active">
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; gap:12px; margin-bottom:16px">
+    <div class="stat-card" style="border-left-color:#2D5F8A">
+      <div class="stat-label">베이비 리마빈 500g (총 봉수)</div>
+      <div class="stat-value" id="stat-lima500">-</div>
+      <div class="stat-sub" id="stat-lima500-sub"></div>
+    </div>
+    <div class="stat-card" style="border-left-color:#8B6914">
+      <div class="stat-label">베이비 리마빈 파우더 300g (총 봉수)</div>
+      <div class="stat-value" id="stat-powder300">-</div>
+      <div class="stat-sub" id="stat-powder300-sub"></div>
+    </div>
+    <div class="stat-card" style="border-left-color:#27AE60">
+      <div class="stat-label">베이비 리마빈 파우더 500g (총 통수)</div>
+      <div class="stat-value" id="stat-powder500">-</div>
+      <div class="stat-sub" id="stat-powder500-sub"></div>
+    </div>
+    <div class="stat-card" style="border-left-color:#E67E22">
+      <div class="stat-label">퀴노아/블랙아이즈빈 (총 통수)</div>
+      <div class="stat-value" id="stat-others">-</div>
+      <div class="stat-sub" id="stat-others-sub"></div>
+    </div>
+    <div class="stat-card" style="border-left-color:#6A5ACD">
+      <div class="stat-label">선물세트 (총 박스)</div>
+      <div class="stat-value" id="stat-gift">-</div>
+      <div class="stat-sub" id="stat-gift-sub"></div>
+    </div>
+  </div>
 
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="title">
-                <h4>CONTACT</h4>
-                <h2>Contact With Me</h2>
-            </div>
-            <div class="contact-me">
-                <div class="left">
-                    <div class="card">
-                        <div class="icon">
-                            <i class="fa-solid fa-phone-volume"></i>
-                        </div>
-                        <div class="info-text">
-                            <h3>phone</h3>
-                            <p>010-2222-1111</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa-solid fa-envelope-open-text"></i>
-                        </div>
-                        <div class="info-text">
-                            <h3>email</h3>
-                            <p>sucoding@naver.com</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa-solid fa-location-crosshairs"></i>
-                        </div>
-                        <div class="info-text">
-                            <h3>address</h3>
-                            <p>Samseong-ro, Gangnam-gu, <br> Seoul, Republic of Korea</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="right">
-                    <form action="#">
-                        <div class="form-group">
-                            <label for="name">name</label>
-                            <input type="text" id="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">email</label>
-                            <input type="text" id="email">
-                        </div>
-                        <div class="form-group">
-                            <label for="msg">message</label>
-                            <textarea id="msg"></textarea>
-                        </div>
-                        <button type="submit">send</button>
-                    </form>
-                </div>
-            </div>
+  <div class="card">
+    <div class="card-title">📦 완성품 재고 상세</div>
+    <table id="finished-table">
+      <thead>
+        <tr>
+          <th>카테고리</th>
+          <th>입수</th>
+          <th>보관 위치</th>
+          <th>수량 (박스)</th>
+          <th>봉/통 환산</th>
+        </tr>
+      </thead>
+      <tbody id="finished-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ 부족 원부자재 알림</div>
+    <div id="warn-materials"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ 탭2: 생산 입력 ══════════════════ -->
+<div id="tab-production" class="content">
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">🏭 생산 등록</div>
+      <div class="info-box">생산 등록 시 BOM 기준으로 원부자재가 자동 차감되고 완성품 재고가 증가합니다.<br>부자재 로스율 <strong>5%</strong> 자동 적용</div>
+      <div class="form-group">
+        <label class="form-label">완성품 선택</label>
+        <select class="form-control" id="prod-product" onchange="updateProdBOM()">
+          <option value="">-- 완성품을 선택하세요 --</option>
+          <option value="lima500_1">베이비 리마빈 500g 1입</option>
+          <option value="lima500_6">베이비 리마빈 500g 6입</option>
+          <option value="lima500_12">베이비 리마빈 500g 12입</option>
+          <option value="lima500_30">베이비 리마빈 500g 30입</option>
+          <option value="powder300_1">베이비 리마빈 파우더 300g 1입</option>
+          <option value="powder300_5">베이비 리마빈 파우더 300g 5입</option>
+          <option value="powder300_6">베이비 리마빈 파우더 300g 6입</option>
+          <option value="powder300_9">베이비 리마빈 파우더 300g 9입</option>
+          <option value="powder300_10">베이비 리마빈 파우더 300g 10입</option>
+          <option value="powder500_1">베이비 리마빈 파우더 500g 1입</option>
+          <option value="powder500_3">베이비 리마빈 파우더 500g 3입</option>
+          <option value="powder500_6">베이비 리마빈 파우더 500g 6입</option>
+          <option value="powder500_30">베이비 리마빈 파우더 500g 30입</option>
+          <optgroup label="── 단품 ──">
+          <option value="black_quinoa_1">블랙퀴노아 600g 1입</option>
+          <option value="red_quinoa_1">레드퀴노아 600g 1입</option>
+          <option value="black_eyes_1">블랙아이즈빈 600g 1입</option>
+          </optgroup>
+          <optgroup label="── 선물세트 ──">
+          <option value="gift_set_4">4종 선물세트</option>
+          <option value="gift_set_2">2종 선물세트</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">생산 수량 (박스)</label>
+        <input type="number" class="form-control" id="prod-qty" min="1" placeholder="예: 100" oninput="updateProdBOM()">
+      </div>
+      <div id="prod-bom-preview" style="margin-bottom:14px"></div>
+      <div id="prod-alert"></div>
+      <button class="btn btn-success" onclick="registerProduction()">✅ 생산 등록</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 최대 생산 가능 수량</div>
+      <table>
+        <thead><tr><th>완성품</th><th>입수</th><th>최대 생산</th><th>제한 요인</th></tr></thead>
+        <tbody id="max-prod-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ 탭3: 판매 입력 ══════════════════ -->
+<div id="tab-sales" class="content">
+
+  <!-- 서브탭 -->
+  <div style="display:flex; gap:8px; margin-bottom:16px">
+    <button class="subtab active" id="subtab-file" onclick="switchSubtab('file')">📂 파일 업로드 (자동)</button>
+    <button class="subtab" id="subtab-manual" onclick="switchSubtab('manual')">✏️ 수동 입력</button>
+  </div>
+
+  <!-- ── 서브탭1: 파일 업로드 ── -->
+  <div id="subcontent-file">
+    <div class="card">
+      <div class="card-title">📂 판매 파일 자동 업로드</div>
+      <div class="info-box">
+        네이버 / 쿠팡(로켓배송) / 사방넷 엑셀 파일을 업로드하면 판매량을 자동으로 파싱해서 완성품 재고를 차감합니다.<br>
+        <strong>세 파일 중 필요한 것만 올려도 됩니다.</strong>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:14px">
+        <div>
+          <div class="form-label">📗 네이버 판매량 파일</div>
+          <div class="drop-zone" id="drop-naver" onclick="document.getElementById('file-naver').click()">
+            <input type="file" id="file-naver" accept=".xlsx,.xls" style="display:none" onchange="handleFile('naver', this)">
+            <div id="drop-naver-label">클릭 또는 드래그</div>
+          </div>
+          <div id="naver-status" class="file-status"></div>
         </div>
-    </section>
-    <script src="script.js"></script>
+        <div>
+          <div class="form-label">📘 쿠팡(로켓배송) 파일</div>
+          <div class="drop-zone" id="drop-coupang" onclick="document.getElementById('file-coupang').click()">
+            <input type="file" id="file-coupang" accept=".xlsx,.xls" style="display:none" onchange="handleFile('coupang', this)">
+            <div id="drop-coupang-label">클릭 또는 드래그</div>
+          </div>
+          <div id="coupang-status" class="file-status"></div>
+        </div>
+        <div>
+          <div class="form-label">📙 사방넷(종합몰) 파일</div>
+          <div class="drop-zone" id="drop-sabang" onclick="document.getElementById('file-sabang').click()">
+            <input type="file" id="file-sabang" accept=".xlsx,.xls" style="display:none" onchange="handleFile('sabang', this)">
+            <div id="drop-sabang-label">클릭 또는 드래그</div>
+          </div>
+          <div id="sabang-status" class="file-status"></div>
+        </div>
+      </div>
+
+      <div id="parse-preview" style="display:none">
+        <div class="section-title">파싱 결과 미리보기</div>
+        <table>
+          <thead><tr><th>채널</th><th>통일상품명</th><th>입수</th><th>판매수량(박스)</th><th>실판매봉수</th></tr></thead>
+          <tbody id="parse-tbody"></tbody>
+        </table>
+        <div style="margin-top:12px; display:flex; gap:10px">
+          <button class="btn btn-danger" onclick="applySales()">✅ 재고 차감 적용</button>
+          <button class="btn" style="background:#eee;color:#555" onclick="resetFiles()">🔄 초기화</button>
+        </div>
+      </div>
+      <div id="apply-alert" style="margin-top:10px"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 현재 완성품 재고 현황</div>
+      <table>
+        <thead><tr><th>완성품명</th><th>입수</th><th>보관 위치</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
+        <tbody id="sale-stock-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── 서브탭2: 수동 입력 ── -->
+  <div id="subcontent-manual" style="display:none">
+    <div class="grid2">
+      <div class="card">
+        <div class="card-title">✏️ 판매 수동 등록</div>
+        <div class="info-box">
+          판매 등록 시 <strong>완성품 수량 × 입수</strong>만큼 봉수가 차감됩니다.<br>
+          예) 베이비 리마빈 500g 2입 × 3박스 → 6봉 차감
+        </div>
+        <div class="form-group">
+          <label class="form-label">채널</label>
+          <select class="form-control" id="sale-channel">
+            <option>네이버</option>
+            <option>쿠팡(로켓배송)</option>
+            <option>쿠팡(일반)</option>
+            <option>롯데홈쇼핑</option>
+            <option>현대홈쇼핑</option>
+            <option>CJ온스타일</option>
+            <option>GS shop</option>
+            <option>스마트스토어</option>
+            <option>신세계몰</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">완성품 선택</label>
+          <select class="form-control" id="sale-product" onchange="updateSalePreview()">
+            <option value="">-- 선택 --</option>
+            <option value="lima500_1">베이비 리마빈 500g 1입</option>
+            <option value="lima500_2">베이비 리마빈 500g 2입</option>
+            <option value="lima500_3">베이비 리마빈 500g 3입</option>
+            <option value="lima500_5">베이비 리마빈 500g 5입</option>
+            <option value="lima500_6">베이비 리마빈 500g 6입</option>
+            <option value="lima500_12">베이비 리마빈 500g 12입</option>
+            <option value="powder300_1">베이비 리마빈 파우더 300g 1입</option>
+            <option value="powder300_2">베이비 리마빈 파우더 300g 2입</option>
+            <option value="powder300_3">베이비 리마빈 파우더 300g 3입</option>
+            <option value="powder300_5">베이비 리마빈 파우더 300g 5입</option>
+            <option value="powder300_6">베이비 리마빈 파우더 300g 6입</option>
+            <option value="powder300_9">베이비 리마빈 파우더 300g 9입</option>
+            <option value="powder300_10">베이비 리마빈 파우더 300g 10입</option>
+            <option value="powder500_1">베이비 리마빈 파우더 500g 1입</option>
+            <option value="powder500_3">베이비 리마빈 파우더 500g 3입</option>
+            <option value="powder500_6">베이비 리마빈 파우더 500g 6입</option>
+            <optgroup label="── 단품 ──">
+            <option value="black_quinoa_1">블랙퀴노아 600g 1입</option>
+            <option value="red_quinoa_1">레드퀴노아 600g 1입</option>
+            <option value="black_eyes_1">블랙아이즈빈 600g 1입</option>
+            </optgroup>
+            <optgroup label="── 선물세트 ──">
+            <option value="gift_set_4">4종 선물세트</option>
+            <option value="gift_set_2">2종 선물세트</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">판매 수량 (박스)</label>
+          <input type="number" class="form-control" id="sale-qty" min="1" placeholder="예: 3" oninput="updateSalePreview()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">주문번호 / 메모 (선택)</label>
+          <input type="text" class="form-control" id="sale-order" placeholder="주문번호 또는 메모">
+        </div>
+        <div id="sale-preview" style="margin-bottom:10px; font-size:12px; color:#2D5F8A; font-weight:600; min-height:18px"></div>
+        <div id="sale-alert"></div>
+        <button class="btn btn-danger" onclick="registerSale()">🛒 판매 등록</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📊 현재 완성품 재고 현황</div>
+        <table>
+          <thead><tr><th>완성품명</th><th>입수</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
+          <tbody id="sale-stock-tbody2"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ 탭4: 원부자재 ══════════════════ -->
+<div id="tab-materials" class="content">
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">🌾 원물 재고</div>
+      <table id="raw-table">
+        <thead><tr><th>원부자재명</th><th>보관위치</th><th>재고량</th></tr></thead>
+        <tbody id="raw-tbody"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">📦 부자재 재고</div>
+      <table>
+        <thead><tr><th>부자재명</th><th>재고(개)</th><th>상태</th></tr></thead>
+        <tbody id="sub-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">➕ 원부자재 입고 등록</div>
+    <div style="display:flex; gap:12px; align-items:flex-end; flex-wrap:wrap">
+      <div class="form-group" style="margin:0; flex:1; min-width:180px">
+        <label class="form-label">자재명</label>
+        <select class="form-control" id="mat-name">
+          <option value="raw_lima">베이비 리마빈 원물 (kg)</option>
+          <option value="raw_powder">볶음 베이비 리마빈 파우더 (kg)</option>
+          <option value="raw_black">블랙퀴노아 (kg)</option>
+          <option value="raw_red">레드퀴노아 (kg)</option>
+          <option value="raw_black_eyes">블랙아이즈빈 (kg)</option>
+          <option value="sub_pouch500">500g 파우치 (개)</option>
+          <option value="sub_pouch300">300g 파우치 (개)</option>
+          <option value="sub_box1">카톤박스 1입 (개)</option>
+          <option value="sub_box3">카톤박스 3입 (개)</option>
+          <option value="sub_box6">카톤박스 6입 (개)</option>
+          <option value="sub_box12">카톤박스 12입 (개)</option>
+          <option value="sub_jianji">간지 12입 (개)</option>
+          <option value="sub_container">소담890 원형용기 (개)</option>
+          <option value="sub_cap">소담중반투명캡 (개)</option>
+          <option value="sub_seal">고주파실링지 75.8파이 (개)</option>
+          <option value="sub_label">라벨(리벨스티커) (개)</option>
+          <option value="sub_barcode_lima">바코드라벨 베이비리마빈 (개)</option>
+          <option value="sub_barcode5">300g 5입 바코드스티커 (개)</option>
+          <option value="sub_barcode10">300g 10입 바코드스티커 (개)</option>
+          <option value="sub_gift4">선물케이스 4입용박스 (개)</option>
+          <option value="sub_giftpad">선물용 케이스(패드) (개)</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin:0; flex:0.5; min-width:100px">
+        <label class="form-label">입고량</label>
+        <input type="number" class="form-control" id="mat-qty" placeholder="수량">
+      </div>
+      <button class="btn btn-primary" onclick="addMaterial()" style="margin-bottom:0; height:36px">입고 등록</button>
+    </div>
+    <div id="mat-alert" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ 탭5: 이력 ══════════════════ -->
+<div id="tab-history" class="content">
+  <div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px">
+      <div class="card-title" style="margin:0; border:none; padding:0">📋 작업 이력</div>
+      <button class="btn btn-sm" style="background:#eee; color:#555" onclick="clearHistory()">이력 삭제</button>
+    </div>
+    <div id="history-list"><div style="color:#888; text-align:center; padding:30px">아직 작업 이력이 없습니다.</div></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// 구글 시트 연동
+// ═══════════════════════════════════════════
+let SCRIPT_URL = localStorage.getItem('lara_script_url') || '';
+let isConnected = false;
+
+function connectSheet() {
+  const url = document.getElementById('script-url-input').value.trim();
+  if (!url.startsWith('https://script.google.com')) {
+    alert('올바른 Apps Script URL을 입력해주세요');
+    return;
+  }
+  SCRIPT_URL = url;
+  localStorage.setItem('lara_script_url', url);
+  loadFromSheet();
+}
+
+function showLoading(show) {
+  document.getElementById('loading').style.display = show ? 'flex' : 'none';
+}
+
+function setSyncStatus(ok, msg) {
+  const el = document.getElementById('sync-status');
+  el.textContent = ok ? '🟢 ' + msg : '🔴 ' + msg;
+}
+
+// 시트에서 전체 데이터 로드
+async function loadFromSheet() {
+  if (!SCRIPT_URL) return;
+  showLoading(true);
+  try {
+    const res = await fetch(SCRIPT_URL + '?action=getAll');
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+
+    // 완성품 재고 반영
+    for (const [key, val] of Object.entries(data.finished)) {
+      if (finishedStock[key]) {
+        finishedStock[key].stock = val.stock;
+        finishedStock[key].loc   = val.loc;
+      } else {
+        finishedStock[key] = val; // 시트에 새 SKU 있으면 자동 추가
+      }
+    }
+    // 원부자재 재고 반영
+    for (const [key, val] of Object.entries(data.materials)) {
+      if (materials[key]) {
+        materials[key].stock = val.stock;
+      } else {
+        materials[key] = val;
+      }
+    }
+    // 이력 반영
+    if (data.history && data.history.length) {
+      history = data.history.map(h => ({ type: h.type, time: h.time, desc: h.desc }));
+    }
+
+    isConnected = true;
+    document.getElementById('setup-banner').style.display = 'none';
+    setSyncStatus(true, '시트 연동됨 · ' + new Date().toLocaleTimeString('ko-KR'));
+    renderDashboard(); renderProduction(); renderSales(); renderMaterials(); renderHistory();
+  } catch(err) {
+    setSyncStatus(false, '연동 실패: ' + err.message);
+  } finally {
+    showLoading(false);
+  }
+}
+
+// 시트에 데이터 저장 (일괄 업데이트)
+async function saveToSheet(updates, histEntry) {
+  if (!SCRIPT_URL || !isConnected) return; // 로컬 모드면 스킵
+  try {
+    // 재고 업데이트
+    if (updates && updates.length) {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'batchUpdate', updates })
+      });
+    }
+    // 이력 저장
+    if (histEntry) {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'addHistory', entry: histEntry })
+      });
+    }
+    setSyncStatus(true, '저장됨 · ' + new Date().toLocaleTimeString('ko-KR'));
+  } catch(err) {
+    setSyncStatus(false, '저장 실패 (로컬만 반영됨)');
+  }
+}
+
+// 새로고침 버튼 함수
+function refreshFromSheet() { loadFromSheet(); }
+
+// ═══════════════════════════════════════════
+// 초기 데이터
+// ═══════════════════════════════════════════
+const LOSS_RATE = 0.05; // 부자재 로스율 5%
+
+// 완성품 재고 (박스 단위)
+let finishedStock = {
+  lima500_1:  { name:'베이비 리마빈 500g', qty:1,  stock:927,  loc:'11번가 창고' },
+  lima500_2:  { name:'베이비 리마빈 500g', qty:2,  stock:490,  loc:'11번가 창고' },
+  lima500_3:  { name:'베이비 리마빈 500g', qty:3,  stock:144,  loc:'11번가 창고' },
+  lima500_5:  { name:'베이비 리마빈 500g', qty:5,  stock:2,    loc:'11번가 창고' },
+  lima500_6:  { name:'베이비 리마빈 500g', qty:6,  stock:76,   loc:'11번가 창고' },
+  lima500_12: { name:'베이비 리마빈 500g', qty:12, stock:295,  loc:'11번가 창고' },
+  lima500_30: { name:'베이비 리마빈 500g', qty:30, stock:0,    loc:'지웰 창고' },
+  powder300_1:  { name:'베이비 리마빈 파우더 300g', qty:1,  stock:490,  loc:'11번가 창고' },
+  powder300_2:  { name:'베이비 리마빈 파우더 300g', qty:2,  stock:264,  loc:'11번가 창고' },
+  powder300_3:  { name:'베이비 리마빈 파우더 300g', qty:3,  stock:99,   loc:'11번가 창고' },
+  powder300_5:  { name:'베이비 리마빈 파우더 300g', qty:5,  stock:1764, loc:'11번가(1245)+쿠팡(519)' },
+  powder300_6:  { name:'베이비 리마빈 파우더 300g', qty:6,  stock:0,    loc:'11번가 창고' },
+  powder300_9:  { name:'베이비 리마빈 파우더 300g', qty:9,  stock:0,    loc:'11번가 창고' },
+  powder300_10: { name:'베이비 리마빈 파우더 300g', qty:10, stock:271,  loc:'11번가(111)+쿠팡(160)' },
+  powder500_1:  { name:'베이비 리마빈 파우더 500g', qty:1,  stock:271,  loc:'지웰 창고(완성품)' },
+  powder500_3:  { name:'베이비 리마빈 파우더 500g', qty:3,  stock:0,    loc:'11번가 창고' },
+  powder500_6:  { name:'베이비 리마빈 파우더 500g', qty:6,  stock:0,    loc:'11번가 창고' },
+  powder500_30: { name:'베이비 리마빈 파우더 500g', qty:30, stock:0,    loc:'지웰 창고' },
+  // 단품
+  black_quinoa_1:  { name:'블랙퀴노아 600g',    qty:1, stock:997, loc:'11번가 창고' },
+  red_quinoa_1:    { name:'레드퀴노아 600g',    qty:1, stock:996, loc:'11번가 창고' },
+  black_eyes_1:    { name:'블랙아이즈빈 600g',  qty:1, stock:1000,loc:'11번가 창고' },
+  // 선물세트
+  gift_set_4:      { name:'4종 선물세트', qty:1, stock:2,  loc:'11번가 창고' },
+  gift_set_2:      { name:'2종 선물세트', qty:1, stock:0,  loc:'지웰 창고' },
+};
+
+// 원부자재 재고
+let materials = {
+  raw_lima:       { name:'베이비 리마빈 원물',        unit:'kg',  stock:32350, loc:'지웰(11350)+11번가(21000)' },
+  raw_powder:     { name:'볶음 베이비 리마빈 파우더', unit:'kg',  stock:9100,  loc:'지웰 창고' },
+  raw_black:      { name:'블랙퀴노아',               unit:'kg',  stock:330,   loc:'지웰 창고' },
+  raw_red:        { name:'레드퀴노아',               unit:'kg',  stock:329,   loc:'지웰 창고' },
+  raw_black_eyes: { name:'블랙아이즈빈',             unit:'kg',  stock:325,   loc:'지웰 창고' },
+  sub_pouch500:   { name:'500g 파우치',              unit:'개',  stock:500,   loc:'지웰 창고' },
+  sub_pouch300:   { name:'300g 파우치',              unit:'개',  stock:12500, loc:'지웰 창고' },
+  sub_box1:       { name:'카톤박스 1입',             unit:'개',  stock:1286,  loc:'지웰 창고' },
+  sub_box3:       { name:'카톤박스 3입',             unit:'개',  stock:1620,  loc:'지웰 창고' },
+  sub_box6:       { name:'카톤박스 6입',             unit:'개',  stock:500,   loc:'지웰 창고' },
+  sub_box12:      { name:'카톤박스 12입',            unit:'개',  stock:970,   loc:'지웰 창고' },
+  sub_jianji:     { name:'간지 12입',               unit:'개',  stock:970,   loc:'지웰 창고' },
+  sub_container:  { name:'소담890 원형용기',          unit:'개',  stock:16357, loc:'지웰 창고' },
+  sub_cap:        { name:'소담중반투명캡',            unit:'개',  stock:16390, loc:'지웰 창고' },
+  sub_seal:       { name:'고주파실링지 75.8파이',     unit:'개',  stock:15300, loc:'지웰 창고' },
+  sub_label:      { name:'라벨(리벨스티커)',          unit:'개',  stock:0,     loc:'지웰 창고' },
+  sub_barcode_lima:{ name:'바코드라벨 베이비리마빈',  unit:'개',  stock:7700,  loc:'지웰 창고' },
+  sub_barcode5:   { name:'300g 5입 바코드스티커',    unit:'개',  stock:0,     loc:'지웰 창고' },
+  sub_barcode10:  { name:'300g 10입 바코드스티커',   unit:'개',  stock:0,     loc:'지웰 창고' },
+  sub_gift4:      { name:'선물케이스 4입용박스',      unit:'개',  stock:1800,  loc:'지웰 창고' },
+  sub_giftpad:    { name:'선물용 케이스(패드)',       unit:'개',  stock:4780,  loc:'지웰 창고' },
+  sub_barcode_bq: { name:'바코드라벨 (블랙퀴노아)',    unit:'개',  stock:900,   loc:'지웰 창고' },
+  sub_barcode_rq: { name:'바코드라벨 (레드퀴노아)',    unit:'개',  stock:900,   loc:'지웰 창고' },
+  sub_barcode_be: { name:'바코드라벨 (블랙아이즈빈)',  unit:'개',  stock:900,   loc:'지웰 창고' },
+};
+
+// BOM 정의 (박스 1개 생산 기준, 원물은 g단위)
+// 원물 로스 없음, 부자재 로스 5% 적용
+const BOM = {
+  lima500_1:  { raw:'raw_lima', rawG:500,   subs:{ sub_pouch500:1, sub_box1:1, sub_barcode_lima:1 } },
+  lima500_6:  { raw:'raw_lima', rawG:3000,  subs:{ sub_pouch500:6, sub_box6:1, sub_barcode_lima:1 } },
+  lima500_12: { raw:'raw_lima', rawG:6000,  subs:{ sub_pouch500:12, sub_box12:1, sub_jianji:1, sub_barcode_lima:1 } },
+  lima500_30: { raw:'raw_lima', rawG:15000, subs:{ sub_pouch500:30, sub_barcode_lima:1 } },
+  powder300_1:  { raw:'raw_powder', rawG:300,  subs:{ sub_pouch300:1,  sub_box1:1,  sub_barcode_lima:1 } },
+  powder300_5:  { raw:'raw_powder', rawG:1500, subs:{ sub_pouch300:5,  sub_box6:1,  sub_barcode_lima:1 } },
+  powder300_10: { raw:'raw_powder', rawG:3000, subs:{ sub_pouch300:10, sub_box12:1, sub_jianji:1, sub_barcode_lima:1 } },
+  powder500_1:  { raw:'raw_powder', rawG:500,  subs:{ sub_container:1, sub_box1:1, sub_cap:1, sub_seal:1, sub_label:1, sub_barcode_lima:1 } },
+  powder500_3:  { raw:'raw_powder', rawG:1500, subs:{ sub_container:3, sub_box3:1, sub_cap:3, sub_seal:3, sub_label:3, sub_barcode_lima:1 } },
+  powder500_6:  { raw:'raw_powder', rawG:3000, subs:{ sub_container:6, sub_box6:1, sub_cap:6, sub_seal:6, sub_label:6, sub_barcode_lima:1 } },
+  powder500_30: { raw:'raw_powder', rawG:15000,subs:{ sub_container:30,sub_cap:30, sub_seal:30,sub_label:30,sub_barcode_lima:1 } },
+  // 단품 (원통 제품)
+  black_quinoa_1: { raw:'raw_black',      rawG:600, subs:{ sub_container:1, sub_box1:1, sub_cap:1, sub_seal:1, sub_label:1, sub_barcode_bq:1 } },
+  red_quinoa_1:   { raw:'raw_red',        rawG:600, subs:{ sub_container:1, sub_box1:1, sub_cap:1, sub_seal:1, sub_label:1, sub_barcode_rq:1 } },
+  black_eyes_1:   { raw:'raw_black_eyes', rawG:600, subs:{ sub_container:1, sub_box1:1, sub_cap:1, sub_seal:1, sub_label:1, sub_barcode_be:1 } },
+  // 4종 선물세트: 리마빈+블랙퀴노아+레드퀴노아+블랙아이즈빈 각 600g + 원통×4
+  gift_set_4: {
+    multiRaw: [
+      { key:'raw_lima',       g:600 },
+      { key:'raw_black',      g:600 },
+      { key:'raw_red',        g:600 },
+      { key:'raw_black_eyes', g:600 },
+    ],
+    subs:{ sub_container:4, sub_cap:4, sub_seal:4, sub_label:4, sub_barcode_lima:1, sub_gift4:1, sub_giftpad:1 }
+  },
+  // 2종 선물세트: 리마빈 원물 1200g + 파우더 1000g + 원통×4
+  gift_set_2: {
+    multiRaw: [
+      { key:'raw_lima',   g:1200 },
+      { key:'raw_powder', g:1000 },
+    ],
+    subs:{ sub_container:4, sub_cap:4, sub_seal:4, sub_label:4, sub_barcode_lima:1, sub_gift4:1, sub_giftpad:1 }
+  },
+};
+
+let history = [];
+
+// ═══════════════════════════════════════════
+// 탭 전환
+// ═══════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+  if (tab === 'dashboard') renderDashboard();
+  if (tab === 'production') renderProduction();
+  if (tab === 'sales') renderSales();
+  if (tab === 'materials') renderMaterials();
+  if (tab === 'history') renderHistory();
+}
+
+// ═══════════════════════════════════════════
+// 유틸
+// ═══════════════════════════════════════════
+function num(n) { return n.toLocaleString(); }
+
+function getTotalBong(category) {
+  let total = 0;
+  for (const [key, item] of Object.entries(finishedStock)) {
+    if (item.name === category) total += item.stock * item.qty;
+  }
+  return total;
+}
+
+function getTotalBoxes(category) {
+  let total = 0;
+  for (const [key, item] of Object.entries(finishedStock)) {
+    if (item.name === category) total += item.stock;
+  }
+  return total;
+}
+
+// ═══════════════════════════════════════════
+// 대시보드 렌더
+// ═══════════════════════════════════════════
+function renderDashboard() {
+  const cats = ['베이비 리마빈 500g','베이비 리마빈 파우더 300g','베이비 리마빈 파우더 500g'];
+  const ids = ['stat-lima500','stat-powder300','stat-powder500'];
+  cats.forEach((cat, i) => {
+    const bong = getTotalBong(cat);
+    const boxes = getTotalBoxes(cat);
+    document.getElementById(ids[i]).textContent = num(bong);
+    document.getElementById(ids[i]+'-sub').textContent = `총 ${num(boxes)}박스`;
+  });
+  // 퀴노아/블랙아이즈빈
+  const otherKeys = ['black_quinoa_1','red_quinoa_1','black_eyes_1'];
+  const otherTotal = otherKeys.reduce((s,k) => s + (finishedStock[k]?.stock||0), 0);
+  document.getElementById('stat-others').textContent = num(otherTotal);
+  document.getElementById('stat-others-sub').textContent = '블랙퀴노아+레드퀴노아+블랙아이즈빈';
+  // 선물세트
+  const giftTotal = (finishedStock['gift_set_4']?.stock||0) + (finishedStock['gift_set_2']?.stock||0);
+  document.getElementById('stat-gift').textContent = num(giftTotal);
+  document.getElementById('stat-gift-sub').textContent = '4종 ' + num(finishedStock['gift_set_4']?.stock||0) + '박스 / 2종 ' + num(finishedStock['gift_set_2']?.stock||0) + '박스';
+
+  // 완성품 테이블
+  const tbody = document.getElementById('finished-tbody');
+  tbody.innerHTML = '';
+  let lastCat = '';
+  for (const [key, item] of Object.entries(finishedStock)) {
+    if (item.stock === 0 && item.qty > 12) continue;
+    const tr = document.createElement('tr');
+    const catColor = item.name.includes('파우더 500') ? 'badge-green' : item.name.includes('파우더 300') ? 'badge-yellow' : item.name.includes('퀴노아') || item.name.includes('아이즈빈') ? 'badge-red' : item.name.includes('세트') ? 'badge-blue' : 'badge-blue';
+    const catBadge = item.name !== lastCat ? `<span class="badge ${catColor}">${item.name}</span>` : '';
+    lastCat = item.name;
+    const bong = item.stock * item.qty;
+    const stockColor = item.stock === 0 ? '#CC0000' : item.stock < 50 ? '#E67E22' : '#27AE60';
+    tr.innerHTML = `
+      <td class="td-left">${catBadge}</td>
+      <td>${item.qty}입</td>
+      <td style="font-size:11px;color:#888">${item.loc}</td>
+      <td style="color:${stockColor};font-weight:700">${num(item.stock)}</td>
+      <td style="font-weight:700">${num(bong)}</td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  // 부족 자재 알림
+  const warnDiv = document.getElementById('warn-materials');
+  const warns = [];
+  for (const [key, mat] of Object.entries(materials)) {
+    if (mat.stock === 0) warns.push(`<div class="alert alert-danger">⚠️ <strong>${mat.name}</strong> 재고 없음</div>`);
+    else if (mat.stock < 100 && mat.unit === '개') warns.push(`<div class="alert alert-warning">📉 <strong>${mat.name}</strong> 재고 부족: ${num(mat.stock)}개</div>`);
+  }
+  warnDiv.innerHTML = warns.length ? warns.join('') : '<div class="alert alert-success">✅ 모든 자재 정상 재고 수준</div>';
+}
+
+// ═══════════════════════════════════════════
+// 생산 탭
+// ═══════════════════════════════════════════
+function updateProdBOM() {
+  const key = document.getElementById('prod-product').value;
+  const qty = parseInt(document.getElementById('prod-qty').value) || 0;
+  const preview = document.getElementById('prod-bom-preview');
+  if (!key || !qty) { preview.innerHTML = ''; return; }
+
+  const bom = BOM[key];
+  if (!bom) { preview.innerHTML = ''; return; }
+
+  let htmlStr = `<div class="section-title">소요 자재 (${num(qty)}박스 기준)</div>`;
+  let canProduce = true;
+
+  // 원물 처리 (단일 or 복수)
+  if (bom.multiRaw) {
+    for (const r of bom.multiRaw) {
+      const needed = r.g * qty / 1000;
+      const have = materials[r.key].stock;
+      const ok = have >= needed;
+      if (!ok) canProduce = false;
+      htmlStr += `<div class="alert alert-warning" style="margin-bottom:4px">🌾 ${materials[r.key].name} ${num(needed)}kg 필요 → 보유 ${num(have)}kg ${ok?'✓':'❌'}</div>`;
+    }
+  } else {
+    const rawNeeded = bom.rawG * qty / 1000;
+    const have = materials[bom.raw].stock;
+    const ok = have >= rawNeeded;
+    if (!ok) canProduce = false;
+    htmlStr += `<div class="alert alert-warning" style="margin-bottom:4px">🌾 ${materials[bom.raw].name} ${num(rawNeeded)}kg 필요 → 보유 ${num(have)}kg ${ok?'✓':'❌'}</div>`;
+  }
+
+  let html = htmlStr;
+  for (const [subKey, subQty] of Object.entries(bom.subs)) {
+    const needed = Math.ceil(subQty * qty * (1 + LOSS_RATE));
+    const have = materials[subKey].stock;
+    const ok = have >= needed;
+    if (!ok) canProduce = false;
+    html += `<div style="display:flex;justify-content:space-between;padding:4px 8px;background:${ok?'#f0faf0':'#fde8e8'};border-radius:4px;margin-bottom:3px;font-size:12px">
+      <span>${materials[subKey].name}</span>
+      <span style="color:${ok?'#27AE60':'#CC0000'};font-weight:700">필요 ${num(needed)}개 / 보유 ${num(have)}개</span>
+    </div>`;
+  }
+  preview.innerHTML = html + htmlStr;
+  document.getElementById('prod-alert').innerHTML = canProduce
+    ? `<div class="alert alert-success">✅ 생산 가능합니다</div>`
+    : `<div class="alert alert-danger">❌ 일부 자재가 부족합니다</div>`;
+}
+
+function registerProduction() {
+  const key = document.getElementById('prod-product').value;
+  const qty = parseInt(document.getElementById('prod-qty').value);
+  if (!key || !qty || qty <= 0) { alert('완성품과 수량을 입력하세요'); return; }
+
+  const bom = BOM[key];
+  const item = finishedStock[key];
+
+  // 원물 차감 (로스 없음) - 단일 or 복수
+  if (bom.multiRaw) {
+    for (const r of bom.multiRaw) {
+      const needed = r.g * qty / 1000;
+      if (materials[r.key].stock < needed) {
+        document.getElementById('prod-alert').innerHTML = `<div class="alert alert-danger">❌ ${materials[r.key].name} 부족: ${num(needed)}kg 필요, ${num(materials[r.key].stock)}kg 보유</div>`;
+        return;
+      }
+    }
+  } else {
+    const rawNeededKg = bom.rawG * qty / 1000;
+    if (materials[bom.raw].stock < rawNeededKg) {
+      document.getElementById('prod-alert').innerHTML = `<div class="alert alert-danger">❌ 원물 부족: ${num(rawNeededKg)}kg 필요, ${num(materials[bom.raw].stock)}kg 보유</div>`;
+      return;
+    }
+  }
+
+  // 부자재 확인
+  for (const [subKey, subQty] of Object.entries(bom.subs)) {
+    const needed = Math.ceil(subQty * qty * (1 + LOSS_RATE));
+    if (materials[subKey].stock < needed) {
+      document.getElementById('prod-alert').innerHTML = `<div class="alert alert-danger">❌ ${materials[subKey].name} 부족</div>`;
+      return;
+    }
+  }
+
+  // 원물 차감 실행
+  if (bom.multiRaw) {
+    for (const r of bom.multiRaw) {
+      materials[r.key].stock = Math.round((materials[r.key].stock - r.g * qty / 1000) * 1000) / 1000;
+    }
+  } else {
+    const rawNeededKg = bom.rawG * qty / 1000;
+    materials[bom.raw].stock = Math.round((materials[bom.raw].stock - rawNeededKg) * 1000) / 1000;
+  }
+  for (const [subKey, subQty] of Object.entries(bom.subs)) {
+    materials[subKey].stock -= Math.ceil(subQty * qty * (1 + LOSS_RATE));
+  }
+  finishedStock[key].stock += qty;
+
+  // 이력
+  const now = new Date().toLocaleString('ko-KR');
+  const histEntry = { time:now, type:'prod', desc:`[생산] ${item.name} ${item.qty}입 × ${num(qty)}박스 생산 완료` };
+  history.unshift({ type:'prod', time:now, desc:histEntry.desc });
+
+  // 구글 시트 업데이트
+  const sheetUpdates = [{ sheet:'finished', key, stock: finishedStock[key].stock }];
+  if (bom.multiRaw) {
+    for (const r of bom.multiRaw) sheetUpdates.push({ sheet:'materials', key:r.key, stock:materials[r.key].stock });
+  } else {
+    sheetUpdates.push({ sheet:'materials', key:bom.raw, stock:materials[bom.raw].stock });
+  }
+  for (const subKey of Object.keys(bom.subs)) sheetUpdates.push({ sheet:'materials', key:subKey, stock:materials[subKey].stock });
+  saveToSheet(sheetUpdates, histEntry);
+
+  document.getElementById('prod-alert').innerHTML = `<div class="alert alert-success">✅ ${item.name} ${item.qty}입 ${num(qty)}박스 생산 등록 완료!</div>`;
+  document.getElementById('prod-qty').value = '';
+  document.getElementById('prod-bom-preview').innerHTML = '';
+  renderProduction();
+}
+
+function renderProduction() {
+  const tbody = document.getElementById('max-prod-tbody');
+  tbody.innerHTML = '';
+  for (const [key, bom] of Object.entries(BOM)) {
+    const item = finishedStock[key];
+    if (!item) continue;
+
+    let rawMax = Infinity;
+    if (bom.multiRaw) {
+      for (const r of bom.multiRaw) {
+        rawMax = Math.min(rawMax, Math.floor(materials[r.key].stock * 1000 / r.g));
+      }
+    } else {
+      rawMax = Math.floor(materials[bom.raw].stock * 1000 / bom.rawG);
+    }
+    let subMax = Infinity, limitMat = '';
+    for (const [subKey, subQty] of Object.entries(bom.subs)) {
+      const possible = Math.floor(materials[subKey].stock / (subQty * (1 + LOSS_RATE)));
+      if (possible < subMax) { subMax = possible; limitMat = materials[subKey].name; }
+    }
+    const maxProd = Math.min(rawMax, subMax);
+    const isZero = maxProd === 0;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="td-left">${item.name}</td><td>${item.qty}입</td>
+      <td style="color:${isZero?'#CC0000':'#27AE60'};font-weight:700">${num(maxProd)}박스</td>
+      <td style="font-size:11px;color:#888">${maxProd===rawMax?'원물':limitMat}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+// ═══════════════════════════════════════════
+// 판매 탭 - 파일 업로드 파싱
+// ═══════════════════════════════════════════
+
+let parsedSales = []; // 파싱된 판매 데이터
+let uploadedFiles = { naver: null, coupang: null, sabang: null };
+
+// 드래그앤드롭 이벤트
+['naver','coupang','sabang'].forEach(src => {
+  const zone = document.getElementById('drop-' + src);
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) processFile(src, file);
+  });
+});
+
+function handleFile(src, input) {
+  if (input.files[0]) processFile(src, input.files[0]);
+}
+
+function processFile(src, file) {
+  const zone = document.getElementById('drop-' + src);
+  const label = document.getElementById('drop-' + src + '-label');
+  const status = document.getElementById(src + '-status');
+  uploadedFiles[src] = file;
+  label.textContent = '📄 ' + file.name;
+  zone.classList.add('done');
+  status.innerHTML = '<span style="color:#27AE60">✓ 파일 로드됨</span>';
+
+  // SheetJS로 파싱
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const wb = XLSX.read(data, { type: 'array' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+      const parsed = parseSource(src, rows);
+      status.innerHTML = `<span style="color:#27AE60">✓ ${parsed.length}개 항목 파싱</span>`;
+
+      // 기존 같은 소스 데이터 제거 후 추가
+      parsedSales = parsedSales.filter(p => p.src !== src);
+      parsedSales = parsedSales.concat(parsed);
+      showParsePreview();
+    } catch(err) {
+      zone.classList.remove('done'); zone.classList.add('error');
+      status.innerHTML = `<span style="color:#CC0000">❌ 파싱 오류: ${err.message}</span>`;
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function classifyProduct(name, option) {
+  name = (name || '').toString();
+  option = (option || '').toString();
+  const combined = name + ' ' + option;
+
+  const excludes = ['선물세트','4종','블랙퀴노아','레드퀴노아','블랙 퀴노아','레드 퀴노아','블랙아이즈','퀴노아','빈박스'];
+  for (const kw of excludes) if (combined.includes(kw)) return null;
+  if (combined.includes('세트') && (combined.includes('리마빈') || combined.includes('파우더'))) return null;
+
+  let qty = null;
+  const m = combined.match(/(\d+)(개|봉|입)/);
+  if (m) qty = parseInt(m[1]);
+
+  if (/300g/i.test(combined)) return { prod: 'powder300', qty: qty || 1 };
+  if (/파우더/.test(combined) && /500g/i.test(combined)) return { prod: 'powder500', qty: qty || 1 };
+  if (/(리마빈|리마콩|라마빈)/.test(combined) && /500g/i.test(combined) && !/파우더/.test(combined))
+    return { prod: 'lima500', qty: qty || 1 };
+  return null;
+}
+
+function parseSource(src, rows) {
+  const results = [];
+  if (src === 'naver') {
+    // 헤더행 찾기 (상품명 포함된 행)
+    let headerIdx = rows.findIndex(r => r.some(c => String(c).includes('상품명')));
+    if (headerIdx < 0) headerIdx = 0;
+    const header = rows[headerIdx];
+    const nameCol = header.findIndex(c => String(c).includes('상품명'));
+    const qtyCol = header.findIndex(c => String(c).includes('결제상품수량'));
+    for (let i = headerIdx+1; i < rows.length; i++) {
+      const row = rows[i];
+      const cl = classifyProduct(row[nameCol], '');
+      const q = parseInt(row[qtyCol]) || 0;
+      if (cl && q > 0) results.push({ src, channel:'네이버', ...cl, boxes: q });
+    }
+  } else if (src === 'coupang') {
+    let headerIdx = rows.findIndex(r => r.some(c => String(c).includes('옵션명')));
+    if (headerIdx < 0) headerIdx = 0;
+    const header = rows[headerIdx];
+    const nameCol = header.findIndex(c => String(c).includes('옵션명'));
+    const qtyCol = header.findIndex(c => String(c) === '판매량');
+    for (let i = headerIdx+1; i < rows.length; i++) {
+      const row = rows[i];
+      const cl = classifyProduct(row[nameCol], '');
+      const q = parseInt(row[qtyCol]) || 0;
+      if (cl && q > 0) results.push({ src, channel:'쿠팡(로켓배송)', ...cl, boxes: q });
+    }
+  } else if (src === 'sabang') {
+    // 사방넷: 헤더 찾기
+    let headerIdx = rows.findIndex(r => r.some(c => String(c).includes('쇼핑몰명')));
+    if (headerIdx < 0) headerIdx = 0;
+    const header = rows[headerIdx];
+    const mallCol = header.findIndex(c => String(c).includes('쇼핑몰명'));
+    const nameCol = header.findIndex(c => String(c).includes('상품명(수집)'));
+    const optCol  = header.findIndex(c => String(c).includes('옵션(수집)'));
+    const qtyCol  = header.findIndex(c => String(c) === '수량');
+    for (let i = headerIdx+1; i < rows.length; i++) {
+      const row = rows[i];
+      const mall = String(row[mallCol] || '');
+      const cl = classifyProduct(row[nameCol], row[optCol]);
+      const q = parseInt(row[qtyCol]) || 0;
+      if (cl && q > 0) results.push({ src, channel: `사방넷(${mall})`, ...cl, boxes: q });
+    }
+  }
+  return results;
+}
+
+// 파싱 결과 합산 (같은 prod+qty 합치기)
+function aggregateSales() {
+  const map = {};
+  for (const item of parsedSales) {
+    const key = item.prod + '_' + item.qty;
+    if (!map[key]) map[key] = { prod: item.prod, qty: item.qty, boxes: 0, channels: new Set() };
+    map[key].boxes += item.boxes;
+    map[key].channels.add(item.channel);
+  }
+  return Object.values(map);
+}
+
+function showParsePreview() {
+  const agg = aggregateSales();
+  if (!agg.length) return;
+  document.getElementById('parse-preview').style.display = 'block';
+  const tbody = document.getElementById('parse-tbody');
+  tbody.innerHTML = '';
+  for (const item of agg) {
+    const prodName = item.prod === 'lima500' ? '베이비 리마빈 500g' :
+                     item.prod === 'powder300' ? '베이비 리마빈 파우더 300g' : '베이비 리마빈 파우더 500g';
+    const bong = item.boxes * item.qty;
+    const ch = [...item.channels].join(', ');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td style="font-size:11px">${ch}</td><td>${prodName}</td><td>${item.qty}입</td>
+      <td style="font-weight:700">${item.boxes.toLocaleString()}</td>
+      <td style="font-weight:700;color:#2D5F8A">${bong.toLocaleString()}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+
+function applySales() {
+  const agg = aggregateSales();
+  const errors = [];
+  const applied = [];
+
+  for (const item of agg) {
+    const key = item.prod + '_' + item.qty;
+    if (!finishedStock[key]) {
+      // 재고 키 없으면 스킵
+      continue;
+    }
+    if (finishedStock[key].stock < item.boxes) {
+      errors.push(`⚠️ ${finishedStock[key].name} ${item.qty}입: 재고 ${finishedStock[key].stock}박스 < 차감 ${item.boxes}박스`);
+    } else {
+      finishedStock[key].stock -= item.boxes;
+      applied.push(`${finishedStock[key].name} ${item.qty}입 ${item.boxes.toLocaleString()}박스 차감`);
+    }
+  }
+
+  const now = new Date().toLocaleString('ko-KR');
+  const srcs = [...new Set(parsedSales.map(p => p.src))].map(s => s === 'naver' ? '네이버' : s === 'coupang' ? '쿠팡' : '사방넷').join('+');
+  const bulkHistEntry = { time:now, type:'sale', desc:`[판매 일괄] ${srcs} 파일 업로드 → ${applied.length}개 SKU 재고 차감` };
+  history.unshift({ type:'sale', time:now, desc:bulkHistEntry.desc });
+  // 변경된 완성품 재고 일괄 저장
+  const bulkUpdates = agg.map(item => ({ sheet:'finished', key:item.prod+'_'+item.qty, stock:finishedStock[item.prod+'_'+item.qty]?.stock ?? 0 }));
+  saveToSheet(bulkUpdates, bulkHistEntry);
+
+  let alertHtml = '';
+  if (applied.length) alertHtml += `<div class="alert alert-success">✅ ${applied.length}개 항목 재고 차감 완료<br><small>${applied.join(' / ')}</small></div>`;
+  if (errors.length) alertHtml += `<div class="alert alert-danger">${errors.join('<br>')}</div>`;
+  document.getElementById('apply-alert').innerHTML = alertHtml;
+
+  parsedSales = [];
+  uploadedFiles = { naver: null, coupang: null, sabang: null };
+  ['naver','coupang','sabang'].forEach(s => {
+    document.getElementById('drop-'+s).className = 'drop-zone';
+    document.getElementById('drop-'+s+'-label').textContent = '클릭 또는 드래그';
+    document.getElementById(s+'-status').innerHTML = '';
+    document.getElementById('file-'+s).value = '';
+  });
+  document.getElementById('parse-preview').style.display = 'none';
+  renderSales();
+}
+
+function resetFiles() {
+  parsedSales = [];
+  ['naver','coupang','sabang'].forEach(s => {
+    document.getElementById('drop-'+s).className = 'drop-zone';
+    document.getElementById('drop-'+s+'-label').textContent = '클릭 또는 드래그';
+    document.getElementById(s+'-status').innerHTML = '';
+    document.getElementById('file-'+s).value = '';
+  });
+  document.getElementById('parse-preview').style.display = 'none';
+  document.getElementById('apply-alert').innerHTML = '';
+}
+
+function registerSale() {
+  const key = document.getElementById('sale-product').value;
+  const qty = parseInt(document.getElementById('sale-qty').value);
+  const channel = document.getElementById('sale-channel').value;
+  const order = document.getElementById('sale-order').value;
+  if (!key || !qty || qty <= 0) { alert('완성품과 수량을 입력하세요'); return; }
+
+  const item = finishedStock[key];
+  if (!item) { alert('완성품 정보를 찾을 수 없습니다'); return; }
+  if (item.stock < qty) {
+    document.getElementById('sale-alert').innerHTML = `<div class="alert alert-danger">❌ 재고 부족: ${num(qty)}박스 필요, ${num(item.stock)}박스 보유</div>`;
+    return;
+  }
+
+  finishedStock[key].stock -= qty;
+  const bong = qty * item.qty;
+
+  const now = new Date().toLocaleString('ko-KR');
+  const saleHistEntry = { time:now, type:'sale', desc:`[판매] ${channel} | ${item.name} ${item.qty}입 × ${num(qty)}박스 (${num(bong)}봉)${order?' | '+order:''}` };
+  history.unshift({ type:'sale', time:now, desc:saleHistEntry.desc });
+  saveToSheet([{ sheet:'finished', key, stock:finishedStock[key].stock }], saleHistEntry);
+
+  document.getElementById('sale-alert').innerHTML = `<div class="alert alert-success">✅ ${item.name} ${item.qty}입 ${num(qty)}박스 (${num(bong)}봉) 판매 등록 완료!</div>`;
+  document.getElementById('sale-qty').value = '';
+  document.getElementById('sale-order').value = '';
+  renderSales();
+}
+
+function switchSubtab(tab) {
+  ['file','manual'].forEach(t => {
+    document.getElementById('subtab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('subcontent-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+  renderSales();
+}
+
+function renderSales() {
+  ['sale-stock-tbody','sale-stock-tbody2'].forEach(id => {
+    const tbody = document.getElementById(id);
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    for (const [key, item] of Object.entries(finishedStock)) {
+      if (item.stock === 0 && item.qty > 12) continue;
+      const bong = item.stock * item.qty;
+      const color = item.stock === 0 ? '#CC0000' : item.stock < 30 ? '#E67E22' : '#1a1a1a';
+      const tr = document.createElement('tr');
+      const isFile = id === 'sale-stock-tbody';
+      tr.innerHTML = isFile
+        ? `<td class="td-left">${item.name}</td><td>${item.qty}입</td><td style="font-size:11px;color:#888">${item.loc}</td><td style="color:${color};font-weight:700">${num(item.stock)}</td><td>${num(bong)}</td>`
+        : `<td class="td-left">${item.name}</td><td>${item.qty}입</td><td style="color:${color};font-weight:700">${num(item.stock)}</td><td>${num(bong)}</td>`;
+      tbody.appendChild(tr);
+    }
+  });
+
+  // 미리보기 업데이트
+  document.getElementById('sale-product').addEventListener('change', updateSalePreview);
+  document.getElementById('sale-qty').addEventListener('input', updateSalePreview);
+}
+
+function updateSalePreview() {
+  const key = document.getElementById('sale-product').value;
+  const qty = parseInt(document.getElementById('sale-qty').value) || 0;
+  const preview = document.getElementById('sale-preview');
+  if (!key || !qty) { preview.textContent = ''; return; }
+  const item = finishedStock[key];
+  if (item) preview.textContent = `→ ${item.name} ${item.qty}입 × ${qty}박스 = 총 ${item.qty * qty}봉 차감`;
+}
+
+// ═══════════════════════════════════════════
+// 원부자재 탭
+// ═══════════════════════════════════════════
+function renderMaterials() {
+  // 원물
+  const rawTbody = document.getElementById('raw-tbody');
+  rawTbody.innerHTML = '';
+  for (const [key, mat] of Object.entries(materials)) {
+    if (!key.startsWith('raw_')) continue;
+    const tr = document.createElement('tr');
+    const color = mat.stock === 0 ? '#CC0000' : mat.stock < 100 ? '#E67E22' : '#27AE60';
+    tr.innerHTML = `<td class="td-left">${mat.name}</td><td style="font-size:11px;color:#888">${mat.loc}</td>
+      <td style="color:${color};font-weight:700">${num(mat.stock)}${mat.unit}</td>`;
+    rawTbody.appendChild(tr);
+  }
+  // 부자재
+  const subTbody = document.getElementById('sub-tbody');
+  subTbody.innerHTML = '';
+  for (const [key, mat] of Object.entries(materials)) {
+    if (!key.startsWith('sub_')) continue;
+    const isZero = mat.stock === 0;
+    const isLow = mat.stock < 100 && mat.stock > 0;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="td-left">${mat.name}</td>
+      <td style="color:${isZero?'#CC0000':isLow?'#E67E22':'#1a1a1a'};font-weight:700">${num(mat.stock)}</td>
+      <td><span class="badge ${isZero?'badge-red':isLow?'badge-yellow':'badge-green'}">${isZero?'재고없음':isLow?'부족':'정상'}</span></td>`;
+    subTbody.appendChild(tr);
+  }
+}
+
+function addMaterial() {
+  const key = document.getElementById('mat-name').value;
+  const qty = parseFloat(document.getElementById('mat-qty').value);
+  if (!qty || qty <= 0) { alert('수량을 입력하세요'); return; }
+  materials[key].stock += qty;
+  const now = new Date().toLocaleString('ko-KR');
+  const matHistEntry = { time:now, type:'mat', desc:`[입고] ${materials[key].name} ${num(qty)}${materials[key].unit} 입고` };
+  history.unshift({ type:'mat', time:now, desc:matHistEntry.desc });
+  saveToSheet([{ sheet:'materials', key, stock:materials[key].stock }], matHistEntry);
+  document.getElementById('mat-alert').innerHTML = `<div class="alert alert-success">✅ ${materials[key].name} ${num(qty)}${materials[key].unit} 입고 등록 완료!</div>`;
+  document.getElementById('mat-qty').value = '';
+  renderMaterials();
+}
+
+// ═══════════════════════════════════════════
+// 이력 탭
+// ═══════════════════════════════════════════
+function renderHistory() {
+  const div = document.getElementById('history-list');
+  if (!history.length) { div.innerHTML = '<div style="color:#888;text-align:center;padding:30px">아직 작업 이력이 없습니다.</div>'; return; }
+  div.innerHTML = history.map(h => `
+    <div class="log-item log-${h.type}">
+      <div class="log-time">${h.time}</div>
+      <div>${h.desc}</div>
+    </div>
+  `).join('');
+}
+
+function clearHistory() {
+  if (confirm('이력을 모두 삭제할까요?')) { history = []; renderHistory(); }
+}
+
+// ═══════════════════════════════════════════
+// 초기화
+// ═══════════════════════════════════════════
+document.getElementById('currentDate').textContent = new Date().toLocaleDateString('ko-KR', {year:'numeric',month:'long',day:'numeric'});
+// 저장된 URL 있으면 자동 표시 및 연결
+if (SCRIPT_URL) {
+  document.getElementById('script-url-input').value = SCRIPT_URL;
+  loadFromSheet();
+}
+document.getElementById('sale-product').addEventListener('change', updateSalePreview);
+document.getElementById('sale-qty').addEventListener('input', updateSalePreview);
+renderDashboard();
+renderProduction();
+</script>
 </body>
 </html>
