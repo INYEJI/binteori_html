@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -8,102 +9,132 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Malgun Gothic', Arial, sans-serif; background: #f0f4f8; color: #1a1a1a; font-size: 13px; }
 
-  /* 헤더 */
-  .header { background: linear-gradient(135deg, #2D5F8A, #4A90D9); color: white; padding: 16px 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-  .header h1 { font-size: 20px; font-weight: 700; }
-  .header .date { font-size: 12px; opacity: 0.8; margin-left: auto; }
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+.header h1 { font-size: 15px; }
+.header { padding: 12px 14px; }
+.tabs { padding: 0 8px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+.tab { padding: 10px 12px; font-size: 11px; }
+.content { padding: 12px 14px; }
+.grid2, .grid3 { grid-template-columns: 1fr !important; }
+div[style*=“grid-template-columns:1fr 1fr 1fr 1fr 1fr”] { grid-template-columns: 1fr 1fr !important; }
+div[style*=“grid-template-columns:1fr 1fr”] { grid-template-columns: 1fr !important; }
+.card { padding: 14px; }
+table { font-size: 11px; }
+th, td { padding: 6px 6px; }
+.stat-value { font-size: 18px; }
+.btn { padding: 10px 16px; font-size: 13px; }
+.form-control { font-size: 14px; padding: 10px 12px; }
+#setup-banner { flex-direction: column; align-items: stretch; gap: 8px; }
+#setup-banner input { width: 100%; }
+.drop-zone { padding: 16px 10px; font-size: 11px; }
+div[style*=“display:flex”][style*=“gap”] { flex-wrap: wrap; }
+}
+@media (max-width: 480px) {
+div[style*=“grid-template-columns:1fr 1fr”] { grid-template-columns: 1fr !important; }
+.stat-card { padding: 12px; }
+.stat-value { font-size: 16px; }
+}
 
-  /* 탭 */
-  .tabs { display: flex; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 0 24px; gap: 4px; }
-  .tab { padding: 12px 20px; cursor: pointer; border-bottom: 3px solid transparent; font-weight: 600; color: #888; transition: all 0.2s; font-size: 13px; }
-  .tab.active { color: #2D5F8A; border-bottom-color: #2D5F8A; }
-  .tab:hover { color: #2D5F8A; background: #f5f9ff; }
+/* 헤더 */
+.header { background: linear-gradient(135deg, #2D5F8A, #4A90D9); color: white; padding: 16px 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.header h1 { font-size: 20px; font-weight: 700; }
+.header .date { font-size: 12px; opacity: 0.8; margin-left: auto; }
 
-  /* 콘텐츠 */
-  .content { display: none; padding: 20px 24px; }
-  .content.active { display: block; }
+/* 탭 */
+.tabs { display: flex; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 0 24px; gap: 4px; }
+.tab { padding: 12px 20px; cursor: pointer; border-bottom: 3px solid transparent; font-weight: 600; color: #888; transition: all 0.2s; font-size: 13px; }
+.tab.active { color: #2D5F8A; border-bottom-color: #2D5F8A; }
+.tab:hover { color: #2D5F8A; background: #f5f9ff; }
 
-  /* 카드 */
-  .card { background: white; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
-  .card-title { font-size: 14px; font-weight: 700; color: #2D5F8A; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #e8f4fd; display: flex; align-items: center; gap: 6px; }
+/* 콘텐츠 */
+.content { display: none; padding: 20px 24px; }
+.content.active { display: block; }
 
-  /* 그리드 */
-  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+/* 카드 */
+.card { background: white; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
+.card-title { font-size: 14px; font-weight: 700; color: #2D5F8A; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #e8f4fd; display: flex; align-items: center; gap: 6px; }
 
-  /* 재고 요약 카드 */
-  .stat-card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 4px solid #2D5F8A; }
-  .stat-label { font-size: 11px; color: #888; margin-bottom: 4px; }
-  .stat-value { font-size: 22px; font-weight: 700; color: #1a1a1a; }
-  .stat-unit { font-size: 11px; color: #888; margin-left: 4px; }
-  .stat-sub { font-size: 11px; color: #4A90D9; margin-top: 2px; }
+/* 그리드 */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
-  /* 테이블 */
-  table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  th { background: #2D5F8A; color: white; padding: 8px 10px; text-align: center; font-weight: 600; white-space: nowrap; }
-  td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; text-align: center; }
-  tr:hover td { background: #f5f9ff; }
-  .td-left { text-align: left; }
-  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
-  .badge-blue { background: #e8f4fd; color: #2D5F8A; }
-  .badge-yellow { background: #fef9e7; color: #8B6914; }
-  .badge-green { background: #e8f8e8; color: #27AE60; }
-  .badge-red { background: #fde8e8; color: #CC0000; }
+/* 재고 요약 카드 */
+.stat-card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 4px solid #2D5F8A; }
+.stat-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+.stat-value { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+.stat-unit { font-size: 11px; color: #888; margin-left: 4px; }
+.stat-sub { font-size: 11px; color: #4A90D9; margin-top: 2px; }
 
-  /* 폼 */
-  .form-group { margin-bottom: 14px; }
-  .form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; display: block; }
-  .form-control { width: 100%; padding: 8px 12px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 13px; outline: none; transition: border 0.2s; font-family: inherit; }
-  .form-control:focus { border-color: #4A90D9; }
-  select.form-control { background: white; cursor: pointer; }
+/* 테이블 */
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { background: #2D5F8A; color: white; padding: 8px 10px; text-align: center; font-weight: 600; white-space: nowrap; }
+td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; text-align: center; }
+tr:hover td { background: #f5f9ff; }
+.td-left { text-align: left; }
+.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+.badge-blue { background: #e8f4fd; color: #2D5F8A; }
+.badge-yellow { background: #fef9e7; color: #8B6914; }
+.badge-green { background: #e8f8e8; color: #27AE60; }
+.badge-red { background: #fde8e8; color: #CC0000; }
 
-  /* 버튼 */
-  .btn { padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
-  .btn-primary { background: #2D5F8A; color: white; }
-  .btn-primary:hover { background: #1a3d5c; }
-  .btn-success { background: #27AE60; color: white; }
-  .btn-success:hover { background: #1e8449; }
-  .btn-danger { background: #CC0000; color: white; }
-  .btn-danger:hover { background: #990000; }
-  .btn-sm { padding: 5px 12px; font-size: 11px; }
+/* 폼 */
+.form-group { margin-bottom: 14px; }
+.form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; display: block; }
+.form-control { width: 100%; padding: 8px 12px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 13px; outline: none; transition: border 0.2s; font-family: inherit; }
+.form-control:focus { border-color: #4A90D9; }
+select.form-control { background: white; cursor: pointer; }
 
-  /* 알림 */
-  .alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; }
-  .alert-success { background: #e8f8e8; color: #27AE60; border-left: 3px solid #27AE60; }
-  .alert-danger { background: #fde8e8; color: #CC0000; border-left: 3px solid #CC0000; }
-  .alert-warning { background: #fef9e7; color: #8B6914; border-left: 3px solid #F0B429; }
+/* 버튼 */
+.btn { padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.btn-primary { background: #2D5F8A; color: white; }
+.btn-primary:hover { background: #1a3d5c; }
+.btn-success { background: #27AE60; color: white; }
+.btn-success:hover { background: #1e8449; }
+.btn-danger { background: #CC0000; color: white; }
+.btn-danger:hover { background: #990000; }
+.btn-sm { padding: 5px 12px; font-size: 11px; }
 
-  /* 재고바 */
-  .stock-bar { background: #eee; border-radius: 4px; height: 6px; margin-top: 4px; overflow: hidden; }
-  .stock-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+/* 알림 */
+.alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; }
+.alert-success { background: #e8f8e8; color: #27AE60; border-left: 3px solid #27AE60; }
+.alert-danger { background: #fde8e8; color: #CC0000; border-left: 3px solid #CC0000; }
+.alert-warning { background: #fef9e7; color: #8B6914; border-left: 3px solid #F0B429; }
 
-  /* 이력 */
-  .log-item { padding: 8px 12px; border-left: 3px solid #4A90D9; background: #f5f9ff; border-radius: 0 6px 6px 0; margin-bottom: 6px; font-size: 12px; }
-  .log-item.log-prod { border-left-color: #27AE60; background: #f0faf0; }
-  .log-item.log-sale { border-left-color: #E67E22; background: #fef5ec; }
-  .log-time { font-size: 10px; color: #888; }
+/* 재고바 */
+.stock-bar { background: #eee; border-radius: 4px; height: 6px; margin-top: 4px; overflow: hidden; }
+.stock-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
 
-  .section-title { font-size: 12px; font-weight: 700; color: #555; margin: 14px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .highlight { color: #CC0000; font-weight: 700; }
-  .good { color: #27AE60; font-weight: 700; }
+/* 이력 */
+.log-item { padding: 8px 12px; border-left: 3px solid #4A90D9; background: #f5f9ff; border-radius: 0 6px 6px 0; margin-bottom: 6px; font-size: 12px; }
+.log-item.log-prod { border-left-color: #27AE60; background: #f0faf0; }
+.log-item.log-sale { border-left-color: #E67E22; background: #fef5ec; }
+.log-time { font-size: 10px; color: #888; }
 
-  /* 반응형 info 박스 */
-  .info-box { background: #e8f4fd; border: 1px solid #b3d4f0; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #2D5F8A; margin-bottom: 14px; }
-  .warn-box { background: #fef9e7; border: 1px solid #f0d060; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #8B6914; }
-  .subtab { padding:8px 18px; border:1.5px solid #ddd; border-radius:20px; background:white; color:#888; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:inherit; }
-  .subtab.active { background:#2D5F8A; color:white; border-color:#2D5F8A; }
-  .subtab:hover:not(.active) { border-color:#4A90D9; color:#2D5F8A; }
-  .drop-zone { border: 2px dashed #b3d4f0; border-radius: 8px; padding: 22px; text-align: center; cursor: pointer; color: #4A90D9; font-size: 12px; font-weight: 600; transition: all 0.2s; background: #f5f9ff; }
-  .drop-zone:hover, .drop-zone.dragover { background: #e8f4fd; border-color: #2D5F8A; }
-  .drop-zone.done { background: #e8f8e8; border-color: #27AE60; color: #27AE60; }
-  .drop-zone.error { background: #fde8e8; border-color: #CC0000; color: #CC0000; }
-  .file-status { font-size: 11px; margin-top: 5px; min-height: 16px; }
+.section-title { font-size: 12px; font-weight: 700; color: #555; margin: 14px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.highlight { color: #CC0000; font-weight: 700; }
+.good { color: #27AE60; font-weight: 700; }
+
+/* 반응형 info 박스 */
+.info-box { background: #e8f4fd; border: 1px solid #b3d4f0; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #2D5F8A; margin-bottom: 14px; }
+.warn-box { background: #fef9e7; border: 1px solid #f0d060; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #8B6914; }
+.subtab { padding:8px 18px; border:1.5px solid #ddd; border-radius:20px; background:white; color:#888; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:inherit; }
+.subtab.active { background:#2D5F8A; color:white; border-color:#2D5F8A; }
+.subtab:hover:not(.active) { border-color:#4A90D9; color:#2D5F8A; }
+.drop-zone { border: 2px dashed #b3d4f0; border-radius: 8px; padding: 22px; text-align: center; cursor: pointer; color: #4A90D9; font-size: 12px; font-weight: 600; transition: all 0.2s; background: #f5f9ff; }
+.drop-zone:hover, .drop-zone.dragover { background: #e8f4fd; border-color: #2D5F8A; }
+.drop-zone.done { background: #e8f8e8; border-color: #27AE60; color: #27AE60; }
+.drop-zone.error { background: #fde8e8; border-color: #CC0000; color: #CC0000; }
+.file-status { font-size: 11px; margin-top: 5px; min-height: 16px; }
 </style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 </head>
 <body>
 
 <!-- 구글 시트 연동 설정 배너 -->
+
 <div id="setup-banner" style="background:#fff3cd;border-bottom:2px solid #f0b429;padding:10px 24px;font-size:12px;display:flex;align-items:center;gap:12px">
   <span>⚙️ <strong>구글 시트 미연동</strong> — Apps Script URL을 입력하면 데이터가 영구 저장됩니다.</span>
   <input id="script-url-input" type="text" placeholder="https://script.google.com/macros/s/..." 
@@ -135,6 +166,7 @@
 </div>
 
 <!-- ══════════════════ 탭1: 재고 현황 ══════════════════ -->
+
 <div id="tab-dashboard" class="content active">
   <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; gap:12px; margin-bottom:16px">
     <div class="stat-card" style="border-left-color:#2D5F8A">
@@ -181,15 +213,28 @@
   </div>
 
   <!-- 11번가 재고 파일 업로드 -->
+
   <div class="card">
     <div class="card-title">🏬 11번가 재고 파일 업데이트</div>
     <div class="info-box">
       11번가 셀러어드민에서 다운받은 <strong>ExcelStockList .xls/.xlsx</strong> 파일을 올리면
       SKU명과 정상실재고를 파싱해서 완성품 재고를 자동으로 업데이트합니다.
     </div>
-    <div class="drop-zone" id="drop-11st" onclick="document.getElementById('file-11st').click()" style="margin-bottom:10px">
-      <input type="file" id="file-11st" accept=".xlsx,.xls" style="display:none" onchange="handle11stFile(this)">
-      <div id="drop-11st-label">📂 11번가 재고 파일 클릭 또는 드래그</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:10px">
+      <div>
+        <div class="form-label">🏬 11번가 재고 파일</div>
+        <div class="drop-zone" id="drop-11st" onclick="document.getElementById('file-11st').click()">
+          <input type="file" id="file-11st" accept=".xlsx,.xls" style="display:none" onchange="handle11stFile(this)">
+          <div id="drop-11st-label">클릭 또는 드래그</div>
+        </div>
+      </div>
+      <div>
+        <div class="form-label">🛒 쿠팡 재고 파일</div>
+        <div class="drop-zone" id="drop-coupang-stock" onclick="document.getElementById('file-coupang-stock').click()">
+          <input type="file" id="file-coupang-stock" accept=".xlsx,.xls" style="display:none" onchange="handleCoupangFile(this)">
+          <div id="drop-coupang-stock-label">클릭 또는 드래그</div>
+        </div>
+      </div>
     </div>
     <div id="11st-preview" style="display:none; margin-bottom:10px">
       <div class="section-title">파싱 결과 미리보기</div>
@@ -212,6 +257,7 @@
 </div>
 
 <!-- ══════════════════ 탭2: 생산 입력 ══════════════════ -->
+
 <div id="tab-production" class="content">
   <div class="grid2">
     <div class="card">
@@ -254,26 +300,32 @@
       <button class="btn btn-success" onclick="registerProduction()">✅ 생산 등록</button>
     </div>
 
-    <div class="card">
-      <div class="card-title">📋 최대 생산 가능 수량</div>
-      <table>
-        <thead><tr><th>완성품</th><th>입수</th><th>최대 생산</th><th>제한 요인</th></tr></thead>
-        <tbody id="max-prod-tbody"></tbody>
-      </table>
-    </div>
+```
+<div class="card">
+  <div class="card-title">📋 최대 생산 가능 수량</div>
+  <table>
+    <thead><tr><th>완성품</th><th>입수</th><th>최대 생산</th><th>제한 요인</th></tr></thead>
+    <tbody id="max-prod-tbody"></tbody>
+  </table>
+</div>
+```
+
   </div>
 </div>
 
 <!-- ══════════════════ 탭3: 판매 입력 ══════════════════ -->
+
 <div id="tab-sales" class="content">
 
   <!-- 서브탭 -->
+
   <div style="display:flex; gap:8px; margin-bottom:16px">
     <button class="subtab active" id="subtab-file" onclick="switchSubtab('file')">📂 파일 업로드 (자동)</button>
     <button class="subtab" id="subtab-manual" onclick="switchSubtab('manual')">✏️ 수동 입력</button>
   </div>
 
   <!-- ── 서브탭1: 파일 업로드 ── -->
+
   <div id="subcontent-file">
     <div class="card">
       <div class="card-title">📂 판매 파일 자동 업로드</div>
@@ -308,30 +360,34 @@
         </div>
       </div>
 
-      <div id="parse-preview" style="display:none">
-        <div class="section-title">파싱 결과 미리보기</div>
-        <table>
-          <thead><tr><th>채널</th><th>통일상품명</th><th>입수</th><th>판매수량(박스)</th><th>실판매봉수</th></tr></thead>
-          <tbody id="parse-tbody"></tbody>
-        </table>
-        <div style="margin-top:12px; display:flex; gap:10px">
-          <button class="btn btn-danger" onclick="applySales()">✅ 재고 차감 적용</button>
-          <button class="btn" style="background:#eee;color:#555" onclick="resetFiles()">🔄 초기화</button>
-        </div>
-      </div>
-      <div id="apply-alert" style="margin-top:10px"></div>
+```
+  <div id="parse-preview" style="display:none">
+    <div class="section-title">파싱 결과 미리보기</div>
+    <table>
+      <thead><tr><th>채널</th><th>통일상품명</th><th>입수</th><th>판매수량(박스)</th><th>실판매봉수</th></tr></thead>
+      <tbody id="parse-tbody"></tbody>
+    </table>
+    <div style="margin-top:12px; display:flex; gap:10px">
+      <button class="btn btn-danger" onclick="applySales()">✅ 재고 차감 적용</button>
+      <button class="btn" style="background:#eee;color:#555" onclick="resetFiles()">🔄 초기화</button>
     </div>
+  </div>
+  <div id="apply-alert" style="margin-top:10px"></div>
+</div>
 
-    <div class="card">
-      <div class="card-title">📊 현재 완성품 재고 현황</div>
-      <table>
-        <thead><tr><th>완성품명</th><th>입수</th><th>보관 위치</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
-        <tbody id="sale-stock-tbody"></tbody>
-      </table>
-    </div>
+<div class="card">
+  <div class="card-title">📊 현재 완성품 재고 현황</div>
+  <table>
+    <thead><tr><th>완성품명</th><th>입수</th><th>보관 위치</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
+    <tbody id="sale-stock-tbody"></tbody>
+  </table>
+</div>
+```
+
   </div>
 
   <!-- ── 서브탭2: 수동 입력 ── -->
+
   <div id="subcontent-manual" style="display:none">
     <div class="grid2">
       <div class="card">
@@ -399,18 +455,22 @@
         <button class="btn btn-danger" onclick="registerSale()">🛒 판매 등록</button>
       </div>
 
-      <div class="card">
-        <div class="card-title">📊 현재 완성품 재고 현황</div>
-        <table>
-          <thead><tr><th>완성품명</th><th>입수</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
-          <tbody id="sale-stock-tbody2"></tbody>
-        </table>
-      </div>
-    </div>
+```
+  <div class="card">
+    <div class="card-title">📊 현재 완성품 재고 현황</div>
+    <table>
+      <thead><tr><th>완성품명</th><th>입수</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
+      <tbody id="sale-stock-tbody2"></tbody>
+    </table>
+  </div>
+</div>
+```
+
   </div>
 </div>
 
 <!-- ══════════════════ 탭4: 원부자재 ══════════════════ -->
+
 <div id="tab-materials" class="content">
   <div class="grid2">
     <div class="card">
@@ -468,6 +528,7 @@
 </div>
 
 <!-- ══════════════════ 탭5: 이력 ══════════════════ -->
+
 <div id="tab-history" class="content">
   <div class="card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px">
@@ -700,6 +761,19 @@ let history = [];
 // ═══════════════════════════════════════════
 // 탭 전환
 // ═══════════════════════════════════════════
+function showCompleteModal(title, desc) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-desc').textContent = desc;
+  document.getElementById('complete-modal').style.display = 'flex';
+}
+
+function closeCompleteModal() {
+  document.getElementById('complete-modal').style.display = 'none';
+  loadFromSheet(); // 구글 시트에서 최신 데이터 새로고침
+  renderDashboard();
+  renderSales();
+}
+
 function switchTab(tab) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
@@ -899,10 +973,11 @@ function registerProduction() {
   for (const subKey of Object.keys(bom.subs)) sheetUpdates.push({ sheet:'materials', key:subKey, stock:materials[subKey].stock });
   saveToSheet(sheetUpdates, histEntry);
 
-  document.getElementById('prod-alert').innerHTML = `<div class="alert alert-success">✅ ${item.name} ${item.qty}입 ${num(qty)}박스 생산 등록 완료!</div>`;
+  document.getElementById('prod-alert').innerHTML = '';
   document.getElementById('prod-qty').value = '';
   document.getElementById('prod-bom-preview').innerHTML = '';
   renderProduction();
+  showCompleteModal('생산 등록 완료! 🏭', `${item.name} ${item.qty}입 ${num(qty)}박스 생산이 등록됐어요.`);
 }
 
 function renderProduction() {
@@ -1115,10 +1190,13 @@ function applySales() {
   const bulkUpdates = agg.map(item => ({ sheet:'finished', key:item.prod+'_'+item.qty, stock:finishedStock[item.prod+'_'+item.qty]?.stock ?? 0 }));
   saveToSheet(bulkUpdates, bulkHistEntry);
 
-  let alertHtml = '';
-  if (applied.length) alertHtml += `<div class="alert alert-success">✅ ${applied.length}개 항목 재고 차감 완료<br><small>${applied.join(' / ')}</small></div>`;
-  if (errors.length) alertHtml += `<div class="alert alert-danger">${errors.join('<br>')}</div>`;
-  document.getElementById('apply-alert').innerHTML = alertHtml;
+  document.getElementById('apply-alert').innerHTML = '';
+  if (errors.length) {
+    document.getElementById('apply-alert').innerHTML = `<div class="alert alert-danger">${errors.join('<br>')}</div>`;
+  }
+  if (applied.length) {
+    showCompleteModal('판매 차감 완료! 🛒', `${applied.length}개 항목 재고가 차감됐어요.`);
+  }
 
   parsedSales = [];
   uploadedFiles = { naver: null, coupang: null, sabang: null };
@@ -1166,10 +1244,11 @@ function registerSale() {
   history.unshift({ type:'sale', time:now, desc:saleHistEntry.desc });
   saveToSheet([{ sheet:'finished', key, stock:finishedStock[key].stock }], saleHistEntry);
 
-  document.getElementById('sale-alert').innerHTML = `<div class="alert alert-success">✅ ${item.name} ${item.qty}입 ${num(qty)}박스 (${num(bong)}봉) 판매 등록 완료!</div>`;
+  document.getElementById('sale-alert').innerHTML = '';
   document.getElementById('sale-qty').value = '';
   document.getElementById('sale-order').value = '';
   renderSales();
+  showCompleteModal('판매 등록 완료! 🛒', `${item.name} ${item.qty}입 ${num(qty)}박스 (${num(bong)}봉) 출고됐어요.`);
 }
 
 function switchSubtab(tab) {
@@ -1213,53 +1292,57 @@ function updateSalePreview() {
 }
 
 // ═══════════════════════════════════════════
-// 11번가 재고 파일 파싱
+// 11번가 / 쿠팡 재고 파일 파싱
 // ═══════════════════════════════════════════
 
-// SKU명 → finishedStock 키 매핑
-function map11stSKU(skuName) {
-  const name = (skuName || '').toString().trim();
+// SKU번호 → finishedStock 키 매핑 (정확한 번호 기반)
+const SKU_MAP_11ST = {
+  '44789029141': 'lima500_1',
+  '44789013647': 'lima500_2',
+  '44788998371': 'lima500_3',  // 베이비 리마빈 500g 3입 = 베이비 리마빈 500g 3개 동일 상품
+  '44788983396': 'lima500_5',
+  '43964431756': 'lima500_6',
+  '43964441068': 'lima500_12',
+  '44844118634': 'powder300_1',
+  '44901639716': 'powder300_2',
+  '45064705376': 'powder300_3',
+  '44199308854': 'powder300_5',
+  '45334588483': 'powder300_6',
+  '45334622727': 'powder300_9',
+  '44199338952': 'powder300_10',
+  '43964388860': 'powder500_1',
+  '43964378487': 'powder500_3',
+  '43964358369': 'powder500_6',
+  '44989737614': 'black_quinoa_1',
+  '44989722120': 'red_quinoa_1',
+  '44989758004': 'black_eyes_1',
+  '44663960306': 'gift_set_4',
+};
 
-  // 300g 파우더
-  if (/300g|300G/.test(name) && /(파우더|가루)/.test(name)) {
-    const m = name.match(/(\d+)(개|입|봉)/);
-    const qty = m ? parseInt(m[1]) : 1;
-    return 'powder300_' + qty;
-  }
-  // 500g 파우더
-  if (/500g|500G/.test(name) && /(파우더|가루)/.test(name)) {
-    const m = name.match(/(\d+)(개|입|봉)/);
-    const qty = m ? parseInt(m[1]) : 1;
-    return 'powder500_' + qty;
-  }
-  // 베이비 리마빈 500g 원물
-  if (/(리마빈|리마콩|라마빈)/.test(name) && /500g|500G/.test(name) && !/(파우더|가루)/.test(name)) {
-    const m = name.match(/(\d+)(개|입|봉)/);
-    const qty = m ? parseInt(m[1]) : 1;
-    return 'lima500_' + qty;
-  }
-  // 블랙퀴노아
-  if (/블랙퀴노아|블랙 퀴노아/.test(name)) return 'black_quinoa_1';
-  // 레드퀴노아
-  if (/레드퀴노아|레드 퀴노아/.test(name)) return 'red_quinoa_1';
-  // 블랙아이즈빈
-  if (/블랙아이즈빈|블랙 아이즈빈/.test(name)) return 'black_eyes_1';
-  // 4종 선물세트
-  if (/4종/.test(name)) return 'gift_set_4';
-  // 2종 선물세트
-  if (/2종/.test(name)) return 'gift_set_2';
+// 쿠팡 옵션명 → finishedStock 키 매핑
+function mapCoupangSKU(optName) {
+  const name = (optName || '').toString();
+  const m = name.match(/(\d+)개.*?(\d+)g|(\d+)g.*?(\d+)개/);
+  let qty = null, gram = null;
+  const qMatch = name.match(/,\s*(\d+)개/);
+  const gMatch = name.match(/(\d+)g/i);
+  if (qMatch) qty = parseInt(qMatch[1]);
+  if (gMatch) gram = parseInt(gMatch[1]);
 
+  if (gram === 300) return qty ? 'powder300_' + qty : null;
+  if (/파우더/.test(name) && gram === 500) return qty ? 'powder500_' + qty : null;
+  if (/(리마빈|리마콩)/.test(name) && !/(파우더)/.test(name) && gram === 500) return qty ? 'lima500_' + qty : null;
   return null;
 }
 
 let parsed11st = [];
+let parsedCoupang = [];
 
+// ── 11번가 파일 처리 ──────────────────────────────────────────
 function handle11stFile(input) {
   const file = input.files[0];
   if (!file) return;
-  const zone = document.getElementById('drop-11st');
   document.getElementById('drop-11st-label').textContent = '📄 ' + file.name;
-
   const reader = new FileReader();
   reader.onload = function(e) {
     try {
@@ -1268,43 +1351,103 @@ function handle11stFile(input) {
       const sheet = wb.Sheets[wb.SheetNames[0]];
       const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
 
-      // 헤더 찾기
-      const headerIdx = rows.findIndex(r => r.some(c => String(c).includes('SKU명')));
-      if (headerIdx < 0) throw new Error('SKU명 컬럼을 찾을 수 없어요');
-      const header = rows[headerIdx];
-      const skuCol    = header.findIndex(c => String(c).includes('SKU명'));
+      const headerIdx = rows.findIndex(r => r.some(c => String(c).includes('SKU번호')));
+      if (headerIdx < 0) throw new Error('SKU번호 컬럼을 찾을 수 없어요');
+      const header   = rows[headerIdx];
+      const skuNumCol = header.findIndex(c => String(c).includes('SKU번호'));
+      const skuNameCol= header.findIndex(c => String(c).includes('SKU명'));
       const stockCol  = header.findIndex(c => String(c).includes('정상실재고'));
 
       parsed11st = [];
       for (let i = headerIdx + 1; i < rows.length; i++) {
-        const skuName = String(rows[i][skuCol] || '').trim();
+        const skuNum  = String(rows[i][skuNumCol] || '').trim();
+        const skuName = String(rows[i][skuNameCol] || '').trim();
         const stock   = parseInt(rows[i][stockCol]) || 0;
-        if (!skuName) continue;
-        const key = map11stSKU(skuName);
-        parsed11st.push({ skuName, stock, key });
+        if (!skuNum || !skuName) continue;
+        const key = SKU_MAP_11ST[skuNum] || null;
+        parsed11st.push({ skuNum, skuName, stock, key, src: '11번가' });
       }
 
-      zone.classList.add('done');
-      show11stPreview();
+      document.getElementById('drop-11st').classList.add('done');
+      showStockPreview();
     } catch(err) {
-      zone.classList.add('error');
-      document.getElementById('11st-alert').innerHTML = `<div class="alert alert-danger">❌ 파싱 오류: ${err.message}</div>`;
+      document.getElementById('drop-11st').classList.add('error');
+      document.getElementById('11st-alert').innerHTML = `<div class="alert alert-danger">❌ ${err.message}</div>`;
     }
   };
   reader.readAsArrayBuffer(file);
 }
 
-function show11stPreview() {
+// ── 쿠팡 재고 파일 처리 ──────────────────────────────────────
+function handleCoupangFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  document.getElementById('drop-coupang-stock-label').textContent = '📄 ' + file.name;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const wb = XLSX.read(data, { type: 'array' });
+      const sheet = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' });
+
+      // 쿠팡 파일: 옵션명 + 판매량 컬럼 찾기
+      const headerIdx = rows.findIndex(r => r.some(c => String(c).includes('옵션명')));
+      if (headerIdx < 0) throw new Error('옵션명 컬럼을 찾을 수 없어요');
+      const header    = rows[headerIdx];
+      const optCol    = header.findIndex(c => String(c).includes('옵션명'));
+      const stockCol  = header.findIndex(c => String(c) === '총 판매수' || String(c).includes('총 판매수'));
+
+      parsedCoupang = [];
+      for (let i = headerIdx + 1; i < rows.length; i++) {
+        const optName = String(rows[i][optCol] || '').trim();
+        const stock   = parseInt(rows[i][stockCol]) || 0;
+        if (!optName) continue;
+        const key = mapCoupangSKU(optName);
+        parsedCoupang.push({ skuName: optName, stock, key, src: '쿠팡' });
+      }
+
+      document.getElementById('drop-coupang-stock').classList.add('done');
+      showStockPreview();
+    } catch(err) {
+      document.getElementById('drop-coupang-stock').classList.add('error');
+      document.getElementById('11st-alert').innerHTML = `<div class="alert alert-danger">❌ 쿠팡 파싱 오류: ${err.message}</div>`;
+    }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// ── 통합 미리보기 ────────────────────────────────────────────
+function showStockPreview() {
+  if (!parsed11st.length && !parsedCoupang.length) return;
   document.getElementById('11st-preview').style.display = 'block';
   const tbody = document.getElementById('11st-tbody');
   tbody.innerHTML = '';
+
+  // 11번가 + 쿠팡 합산 계산
+  const combined = {};
   for (const item of parsed11st) {
+    if (!item.key) continue;
+    if (!combined[item.key]) combined[item.key] = { key: item.key, st11: 0, stCoupang: 0, name: item.skuName };
+    combined[item.key].st11 = item.stock;
+  }
+  for (const item of parsedCoupang) {
+    if (!item.key) continue;
+    if (!combined[item.key]) combined[item.key] = { key: item.key, st11: 0, stCoupang: 0, name: item.skuName };
+    combined[item.key].stCoupang = item.stock;
+  }
+
+  // 미리보기 테이블
+  const allItems = [...parsed11st, ...parsedCoupang];
+  for (const item of allItems) {
     const current = item.key && finishedStock[item.key] ? finishedStock[item.key].stock : '-';
-    const mapped  = item.key ? `<span style="color:#27AE60;font-weight:600">${item.key}</span>` : `<span style="color:#888">매핑 없음</span>`;
+    const mapped  = item.key
+      ? `<span style="color:#27AE60;font-weight:600">${item.key}</span>`
+      : `<span style="color:#aaa">매핑없음</span>`;
     const changed = item.key && finishedStock[item.key] && finishedStock[item.key].stock !== item.stock;
     const tr = document.createElement('tr');
     tr.style.background = !item.key ? '#f9f9f9' : changed ? '#fffde7' : '#f0faf0';
-    tr.innerHTML = `<td class="td-left">${item.skuName}</td>
+    tr.innerHTML = `<td class="td-left"><span class="badge ${item.src==='11번가'?'badge-blue':'badge-green'}" style="margin-right:4px">${item.src}</span>${item.skuName}</td>
       <td style="font-weight:700">${item.stock.toLocaleString()}</td>
       <td>${mapped}</td>
       <td style="color:${changed?'#E67E22':'#888'}">${current}</td>`;
@@ -1312,50 +1455,80 @@ function show11stPreview() {
   }
 }
 
+// ── 재고 업데이트 적용 ───────────────────────────────────────
 async function apply11stStock() {
+  // 11번가 + 쿠팡 합산
+  const combined = {};
+  for (const item of parsed11st) {
+    if (!item.key) continue;
+    if (!combined[item.key]) combined[item.key] = { st11: 0, stCoupang: 0 };
+    combined[item.key].st11 = item.stock;
+  }
+  for (const item of parsedCoupang) {
+    if (!item.key) continue;
+    if (!combined[item.key]) combined[item.key] = { st11: 0, stCoupang: 0 };
+    combined[item.key].stCoupang = item.stock;
+  }
+
   const updates = [];
   const applied = [];
-  for (const item of parsed11st) {
-    if (!item.key || !finishedStock[item.key]) continue;
-    finishedStock[item.key].stock = item.stock;
-    updates.push({ sheet: 'finished', key: item.key, stock: item.stock });
-    applied.push(`${finishedStock[item.key].name} ${finishedStock[item.key].qty}입 → ${item.stock.toLocaleString()}박스`);
+
+  for (const [key, val] of Object.entries(combined)) {
+    if (!finishedStock[key]) continue;
+    const total = val.st11 + val.stCoupang;
+    finishedStock[key].stock = total;
+    if (val.st11 > 0 && val.stCoupang > 0) {
+      finishedStock[key].loc = `11번가(${val.st11})+쿠팡(${val.stCoupang})`;
+    } else if (val.stCoupang > 0) {
+      finishedStock[key].loc = `쿠팡(${val.stCoupang})`;
+    }
+    updates.push({ sheet: 'finished', key, stock: total });
+    applied.push(`${finishedStock[key].name} ${finishedStock[key].qty}입 → ${val.st11>0?`11번가 ${val.st11}`:''}${val.st11>0&&val.stCoupang>0?' + ':''}${val.stCoupang>0?`쿠팡 ${val.stCoupang}`:''} = ${total}박스`);
   }
 
   const now = new Date().toLocaleString('ko-KR');
-  const histEntry = { time: now, type: 'sync', desc: `[11번가 동기화] ${applied.length}개 SKU 재고 업데이트` };
+  const srcs = [parsed11st.length?'11번가':'', parsedCoupang.length?'쿠팡':''].filter(Boolean).join('+');
+  const histEntry = { time: now, type: 'sync', desc: `[${srcs} 동기화] ${applied.length}개 SKU 재고 업데이트` };
   history.unshift({ type: 'mat', time: now, desc: histEntry.desc });
   await saveToSheet(updates, histEntry);
 
-  document.getElementById('11st-alert').innerHTML = `<div class="alert alert-success">✅ ${applied.length}개 SKU 재고 업데이트 완료!</div>`;
+  document.getElementById('11st-alert').innerHTML = '';
   document.getElementById('11st-preview').style.display = 'none';
   reset11st();
-  renderDashboard();
-  renderSales();
+  showCompleteModal(
+    `${srcs} 재고 업데이트 완료!`,
+    `${applied.length}개 SKU가 업데이트됐어요.\n${applied.join(' / ')}`
+  );
 }
 
 function reset11st() {
-  parsed11st = [];
-  document.getElementById('drop-11st').className = 'drop-zone';
+  parsed11st = []; parsedCoupang = [];
+  ['drop-11st','drop-coupang-stock'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.className = 'drop-zone'; }
+  });
   document.getElementById('drop-11st-label').textContent = '📂 11번가 재고 파일 클릭 또는 드래그';
-  document.getElementById('file-11st').value = '';
+  document.getElementById('drop-coupang-stock-label').textContent = '📂 쿠팡 재고 파일 클릭 또는 드래그';
+  ['file-11st','file-coupang-stock'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
   document.getElementById('11st-preview').style.display = 'none';
 }
 
-// 드래그앤드롭
-const zone11 = document.getElementById('drop-11st');
-if (zone11) {
-  zone11.addEventListener('dragover', e => { e.preventDefault(); zone11.classList.add('dragover'); });
-  zone11.addEventListener('dragleave', () => zone11.classList.remove('dragover'));
-  zone11.addEventListener('drop', e => {
-    e.preventDefault(); zone11.classList.remove('dragover');
-    const file = e.dataTransfer.files[0];
-    if (file) {
-      document.getElementById('file-11st').files = e.dataTransfer.files;
-      handle11stFile(document.getElementById('file-11st'));
-    }
+// 드래그앤드롭 등록
+['11st','coupang-stock'].forEach(src => {
+  const zone = document.getElementById('drop-' + src);
+  if (!zone) return;
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault(); zone.classList.remove('dragover');
+    const fileInput = document.getElementById('file-' + src);
+    fileInput.files = e.dataTransfer.files;
+    src === '11st' ? handle11stFile(fileInput) : handleCoupangFile(fileInput);
   });
-}
+});
 
 // ═══════════════════════════════════════════
 // 원부자재 탭
@@ -1396,9 +1569,10 @@ function addMaterial() {
   const matHistEntry = { time:now, type:'mat', desc:`[입고] ${materials[key].name} ${num(qty)}${materials[key].unit} 입고` };
   history.unshift({ type:'mat', time:now, desc:matHistEntry.desc });
   saveToSheet([{ sheet:'materials', key, stock:materials[key].stock }], matHistEntry);
-  document.getElementById('mat-alert').innerHTML = `<div class="alert alert-success">✅ ${materials[key].name} ${num(qty)}${materials[key].unit} 입고 등록 완료!</div>`;
+  document.getElementById('mat-alert').innerHTML = '';
   document.getElementById('mat-qty').value = '';
   renderMaterials();
+  showCompleteModal('입고 등록 완료! 📦', `${materials[key].name} ${num(qty)}${materials[key].unit}이 입고됐어요.`);
 }
 
 // ═══════════════════════════════════════════
@@ -1433,5 +1607,16 @@ document.getElementById('sale-qty').addEventListener('input', updateSalePreview)
 renderDashboard();
 renderProduction();
 </script>
+
+<!-- 완료 모달 -->
+
+<div id="complete-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:99999;align-items:center;justify-content:center">
+  <div style="background:white;border-radius:16px;padding:36px 40px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.2);max-width:360px;width:90%;margin:0 16px">
+    <div style="font-size:48px;margin-bottom:12px">✅</div>
+    <div style="font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:8px" id="modal-title">업데이트 완료!</div>
+    <div style="font-size:13px;color:#888;margin-bottom:24px" id="modal-desc"></div>
+    <button onclick="closeCompleteModal()" style="padding:12px 36px;background:#2D5F8A;color:white;border:none;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;width:100%">확인</button>
+  </div>
+</div>
 </body>
 </html>
