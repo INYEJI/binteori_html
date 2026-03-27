@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -9,132 +8,163 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Malgun Gothic', Arial, sans-serif; background: #f0f4f8; color: #1a1a1a; font-size: 13px; }
 
-/* 모바일 반응형 */
-@media (max-width: 768px) {
-.header h1 { font-size: 15px; }
-.header { padding: 12px 14px; }
-.tabs { padding: 0 8px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
-.tab { padding: 10px 12px; font-size: 11px; }
-.content { padding: 12px 14px; }
-.grid2, .grid3 { grid-template-columns: 1fr !important; }
-div[style*=“grid-template-columns:1fr 1fr 1fr 1fr 1fr”] { grid-template-columns: 1fr 1fr !important; }
-div[style*=“grid-template-columns:1fr 1fr”] { grid-template-columns: 1fr !important; }
-.card { padding: 14px; }
-table { font-size: 11px; }
-th, td { padding: 6px 6px; }
-.stat-value { font-size: 18px; }
-.btn { padding: 10px 16px; font-size: 13px; }
-.form-control { font-size: 14px; padding: 10px 12px; }
-#setup-banner { flex-direction: column; align-items: stretch; gap: 8px; }
-#setup-banner input { width: 100%; }
-.drop-zone { padding: 16px 10px; font-size: 11px; }
-div[style*=“display:flex”][style*=“gap”] { flex-wrap: wrap; }
-}
-@media (max-width: 480px) {
-div[style*=“grid-template-columns:1fr 1fr”] { grid-template-columns: 1fr !important; }
-.stat-card { padding: 12px; }
-.stat-value { font-size: 16px; }
-}
+  /* 모바일 반응형 */
+  @media (max-width: 768px) {
+    /* 헤더 */
+    .header { padding: 10px 14px; gap: 8px; }
+    .header h1 { font-size: 14px; }
+    #sync-status { display: none; }
+    #currentDate { font-size: 10px; }
 
-/* 헤더 */
-.header { background: linear-gradient(135deg, #2D5F8A, #4A90D9); color: white; padding: 16px 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-.header h1 { font-size: 20px; font-weight: 700; }
-.header .date { font-size: 12px; opacity: 0.8; margin-left: auto; }
+    /* 배너 */
+    #setup-banner { flex-direction: column; gap: 6px; padding: 10px 14px; }
+    #setup-banner input { width: 100%; font-size: 13px; }
+    #setup-banner span { font-size: 11px; }
 
-/* 탭 */
-.tabs { display: flex; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 0 24px; gap: 4px; }
-.tab { padding: 12px 20px; cursor: pointer; border-bottom: 3px solid transparent; font-weight: 600; color: #888; transition: all 0.2s; font-size: 13px; }
-.tab.active { color: #2D5F8A; border-bottom-color: #2D5F8A; }
-.tab:hover { color: #2D5F8A; background: #f5f9ff; }
+    /* 탭 - 아이콘만 보이게, 가로 스크롤 */
+    .tabs { padding: 0 4px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 0; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { padding: 10px 10px; font-size: 11px; white-space: nowrap; flex-shrink: 0; }
 
-/* 콘텐츠 */
-.content { display: none; padding: 20px 24px; }
-.content.active { display: block; }
+    /* 콘텐츠 */
+    .content { padding: 10px 12px; }
+    .card { padding: 12px; margin-bottom: 12px; }
+    .card-title { font-size: 13px; margin-bottom: 10px; }
 
-/* 카드 */
-.card { background: white; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
-.card-title { font-size: 14px; font-weight: 700; color: #2D5F8A; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #e8f4fd; display: flex; align-items: center; gap: 6px; }
+    /* stat 카드 - 2열로 */
+    .stat-cards-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+    .stat-card { padding: 10px 12px; }
+    .stat-label { font-size: 10px; }
+    .stat-value { font-size: 16px; }
+    .stat-sub { font-size: 10px; }
 
-/* 그리드 */
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    /* 그리드 */
+    .grid2, .grid3 { grid-template-columns: 1fr !important; }
 
-/* 재고 요약 카드 */
-.stat-card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 4px solid #2D5F8A; }
-.stat-label { font-size: 11px; color: #888; margin-bottom: 4px; }
-.stat-value { font-size: 22px; font-weight: 700; color: #1a1a1a; }
-.stat-unit { font-size: 11px; color: #888; margin-left: 4px; }
-.stat-sub { font-size: 11px; color: #4A90D9; margin-top: 2px; }
+    /* 테이블 */
+    table { font-size: 11px; }
+    th, td { padding: 5px 5px; }
+    .td-left { font-size: 11px; }
 
-/* 테이블 */
-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-th { background: #2D5F8A; color: white; padding: 8px 10px; text-align: center; font-weight: 600; white-space: nowrap; }
-td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; text-align: center; }
-tr:hover td { background: #f5f9ff; }
-.td-left { text-align: left; }
-.badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
-.badge-blue { background: #e8f4fd; color: #2D5F8A; }
-.badge-yellow { background: #fef9e7; color: #8B6914; }
-.badge-green { background: #e8f8e8; color: #27AE60; }
-.badge-red { background: #fde8e8; color: #CC0000; }
+    /* 폼 */
+    .form-control { font-size: 15px; padding: 10px 12px; }
+    .btn { padding: 11px 16px; font-size: 13px; width: 100%; }
+    .btn-sm { width: auto; }
 
-/* 폼 */
-.form-group { margin-bottom: 14px; }
-.form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; display: block; }
-.form-control { width: 100%; padding: 8px 12px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 13px; outline: none; transition: border 0.2s; font-family: inherit; }
-.form-control:focus { border-color: #4A90D9; }
-select.form-control { background: white; cursor: pointer; }
+    /* 드롭존 */
+    .drop-zone { padding: 14px 8px; font-size: 11px; }
 
-/* 버튼 */
-.btn { padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
-.btn-primary { background: #2D5F8A; color: white; }
-.btn-primary:hover { background: #1a3d5c; }
-.btn-success { background: #27AE60; color: white; }
-.btn-success:hover { background: #1e8449; }
-.btn-danger { background: #CC0000; color: white; }
-.btn-danger:hover { background: #990000; }
-.btn-sm { padding: 5px 12px; font-size: 11px; }
+    /* 플렉스 */
+    div[style*="display:flex"] { flex-wrap: wrap; }
 
-/* 알림 */
-.alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; }
-.alert-success { background: #e8f8e8; color: #27AE60; border-left: 3px solid #27AE60; }
-.alert-danger { background: #fde8e8; color: #CC0000; border-left: 3px solid #CC0000; }
-.alert-warning { background: #fef9e7; color: #8B6914; border-left: 3px solid #F0B429; }
+    /* 파일 업로드 2열 → 1열 */
+    div[style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
 
-/* 재고바 */
-.stock-bar { background: #eee; border-radius: 4px; height: 6px; margin-top: 4px; overflow: hidden; }
-.stock-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+    /* 생산 가능 수량 테이블 숨기기 (모바일에서 너무 작음) */
+    .hide-mobile { display: none !important; }
+  }
+  @media (max-width: 480px) {
+    .stat-cards-grid { grid-template-columns: 1fr 1fr !important; }
+    .stat-value { font-size: 15px; }
+  }
 
-/* 이력 */
-.log-item { padding: 8px 12px; border-left: 3px solid #4A90D9; background: #f5f9ff; border-radius: 0 6px 6px 0; margin-bottom: 6px; font-size: 12px; }
-.log-item.log-prod { border-left-color: #27AE60; background: #f0faf0; }
-.log-item.log-sale { border-left-color: #E67E22; background: #fef5ec; }
-.log-time { font-size: 10px; color: #888; }
+  /* 헤더 */
+  .header { background: linear-gradient(135deg, #2D5F8A, #4A90D9); color: white; padding: 16px 24px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .header .date { font-size: 12px; opacity: 0.8; margin-left: auto; }
 
-.section-title { font-size: 12px; font-weight: 700; color: #555; margin: 14px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-.highlight { color: #CC0000; font-weight: 700; }
-.good { color: #27AE60; font-weight: 700; }
+  /* 탭 */
+  .tabs { display: flex; background: #fff; border-bottom: 2px solid #e0e0e0; padding: 0 24px; gap: 4px; }
+  .tab { padding: 12px 20px; cursor: pointer; border-bottom: 3px solid transparent; font-weight: 600; color: #888; transition: all 0.2s; font-size: 13px; }
+  .tab.active { color: #2D5F8A; border-bottom-color: #2D5F8A; }
+  .tab:hover { color: #2D5F8A; background: #f5f9ff; }
 
-/* 반응형 info 박스 */
-.info-box { background: #e8f4fd; border: 1px solid #b3d4f0; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #2D5F8A; margin-bottom: 14px; }
-.warn-box { background: #fef9e7; border: 1px solid #f0d060; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #8B6914; }
-.subtab { padding:8px 18px; border:1.5px solid #ddd; border-radius:20px; background:white; color:#888; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:inherit; }
-.subtab.active { background:#2D5F8A; color:white; border-color:#2D5F8A; }
-.subtab:hover:not(.active) { border-color:#4A90D9; color:#2D5F8A; }
-.drop-zone { border: 2px dashed #b3d4f0; border-radius: 8px; padding: 22px; text-align: center; cursor: pointer; color: #4A90D9; font-size: 12px; font-weight: 600; transition: all 0.2s; background: #f5f9ff; }
-.drop-zone:hover, .drop-zone.dragover { background: #e8f4fd; border-color: #2D5F8A; }
-.drop-zone.done { background: #e8f8e8; border-color: #27AE60; color: #27AE60; }
-.drop-zone.error { background: #fde8e8; border-color: #CC0000; color: #CC0000; }
-.file-status { font-size: 11px; margin-top: 5px; min-height: 16px; }
+  /* 콘텐츠 */
+  .content { display: none; padding: 20px 24px; }
+  .content.active { display: block; }
+
+  /* 카드 */
+  .card { background: white; border-radius: 10px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); margin-bottom: 16px; }
+  .card-title { font-size: 14px; font-weight: 700; color: #2D5F8A; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid #e8f4fd; display: flex; align-items: center; gap: 6px; }
+
+  /* 그리드 */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  /* 재고 요약 카드 */
+  .stat-card { background: white; border-radius: 10px; padding: 14px 16px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 4px solid #2D5F8A; }
+  .stat-label { font-size: 11px; color: #888; margin-bottom: 4px; }
+  .stat-value { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+  .stat-unit { font-size: 11px; color: #888; margin-left: 4px; }
+  .stat-sub { font-size: 11px; color: #4A90D9; margin-top: 2px; }
+
+  /* 테이블 */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 400px; }
+  th { background: #2D5F8A; color: white; padding: 8px 10px; text-align: center; font-weight: 600; white-space: nowrap; }
+  td { padding: 7px 10px; border-bottom: 1px solid #f0f0f0; text-align: center; }
+  tr:hover td { background: #f5f9ff; }
+  .td-left { text-align: left; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+  .badge-blue { background: #e8f4fd; color: #2D5F8A; }
+  .badge-yellow { background: #fef9e7; color: #8B6914; }
+  .badge-green { background: #e8f8e8; color: #27AE60; }
+  .badge-red { background: #fde8e8; color: #CC0000; }
+
+  /* 폼 */
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 12px; font-weight: 600; color: #555; margin-bottom: 5px; display: block; }
+  .form-control { width: 100%; padding: 8px 12px; border: 1.5px solid #ddd; border-radius: 6px; font-size: 13px; outline: none; transition: border 0.2s; font-family: inherit; }
+  .form-control:focus { border-color: #4A90D9; }
+  select.form-control { background: white; cursor: pointer; }
+
+  /* 버튼 */
+  .btn { padding: 9px 20px; border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+  .btn-primary { background: #2D5F8A; color: white; }
+  .btn-primary:hover { background: #1a3d5c; }
+  .btn-success { background: #27AE60; color: white; }
+  .btn-success:hover { background: #1e8449; }
+  .btn-danger { background: #CC0000; color: white; }
+  .btn-danger:hover { background: #990000; }
+  .btn-sm { padding: 5px 12px; font-size: 11px; }
+
+  /* 알림 */
+  .alert { padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; }
+  .alert-success { background: #e8f8e8; color: #27AE60; border-left: 3px solid #27AE60; }
+  .alert-danger { background: #fde8e8; color: #CC0000; border-left: 3px solid #CC0000; }
+  .alert-warning { background: #fef9e7; color: #8B6914; border-left: 3px solid #F0B429; }
+
+  /* 재고바 */
+  .stock-bar { background: #eee; border-radius: 4px; height: 6px; margin-top: 4px; overflow: hidden; }
+  .stock-bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+
+  /* 이력 */
+  .log-item { padding: 8px 12px; border-left: 3px solid #4A90D9; background: #f5f9ff; border-radius: 0 6px 6px 0; margin-bottom: 6px; font-size: 12px; }
+  .log-item.log-prod { border-left-color: #27AE60; background: #f0faf0; }
+  .log-item.log-sale { border-left-color: #E67E22; background: #fef5ec; }
+  .log-time { font-size: 10px; color: #888; }
+
+  .section-title { font-size: 12px; font-weight: 700; color: #555; margin: 14px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .highlight { color: #CC0000; font-weight: 700; }
+  .good { color: #27AE60; font-weight: 700; }
+
+  /* 반응형 info 박스 */
+  .info-box { background: #e8f4fd; border: 1px solid #b3d4f0; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #2D5F8A; margin-bottom: 14px; }
+  .warn-box { background: #fef9e7; border: 1px solid #f0d060; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #8B6914; }
+  .subtab { padding:8px 18px; border:1.5px solid #ddd; border-radius:20px; background:white; color:#888; font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:inherit; }
+  .subtab.active { background:#2D5F8A; color:white; border-color:#2D5F8A; }
+  .subtab:hover:not(.active) { border-color:#4A90D9; color:#2D5F8A; }
+  .drop-zone { border: 2px dashed #b3d4f0; border-radius: 8px; padding: 22px; text-align: center; cursor: pointer; color: #4A90D9; font-size: 12px; font-weight: 600; transition: all 0.2s; background: #f5f9ff; }
+  .drop-zone:hover, .drop-zone.dragover { background: #e8f4fd; border-color: #2D5F8A; }
+  .drop-zone.done { background: #e8f8e8; border-color: #27AE60; color: #27AE60; }
+  .drop-zone.error { background: #fde8e8; border-color: #CC0000; color: #CC0000; }
+  .file-status { font-size: 11px; margin-top: 5px; min-height: 16px; }
 </style>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-
 </head>
 <body>
 
 <!-- 구글 시트 연동 설정 배너 -->
-
 <div id="setup-banner" style="background:#fff3cd;border-bottom:2px solid #f0b429;padding:10px 24px;font-size:12px;display:flex;align-items:center;gap:12px">
   <span>⚙️ <strong>구글 시트 미연동</strong> — Apps Script URL을 입력하면 데이터가 영구 저장됩니다.</span>
   <input id="script-url-input" type="text" placeholder="https://script.google.com/macros/s/..." 
@@ -148,7 +178,7 @@ select.form-control { background: white; cursor: pointer; }
   <h1>라라마켓 재고관리 시스템</h1>
   <div style="margin-left:auto;display:flex;align-items:center;gap:12px">
     <div id="sync-status" style="font-size:11px;opacity:0.8">⚪ 로컬 모드</div>
-    <button onclick="refreshFromSheet()" style="padding:4px 10px;background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.4);border-radius:4px;font-size:11px;cursor:pointer">🔄 새로고침</button>
+    <button onclick="refreshFromSheet()" style="padding:4px 10px;background:rgba(255,255,255,0.2);color:white;border:1px solid rgba(255,255,255,0.4);border-radius:4px;font-size:11px;cursor:pointer" class="refresh-btn">🔄 새로고침</button>
     <div class="date" id="currentDate"></div>
   </div>
 </div>
@@ -166,9 +196,8 @@ select.form-control { background: white; cursor: pointer; }
 </div>
 
 <!-- ══════════════════ 탭1: 재고 현황 ══════════════════ -->
-
 <div id="tab-dashboard" class="content active">
-  <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; gap:12px; margin-bottom:16px">
+  <div class="stat-cards-grid" style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr; gap:12px; margin-bottom:16px">
     <div class="stat-card" style="border-left-color:#2D5F8A">
       <div class="stat-label">베이비 리마빈 500g (총 봉수)</div>
       <div class="stat-value" id="stat-lima500">-</div>
@@ -198,7 +227,7 @@ select.form-control { background: white; cursor: pointer; }
 
   <div class="card">
     <div class="card-title">📦 완성품 재고 상세</div>
-    <table id="finished-table">
+    <div class="table-wrap"><table id="finished-table">
       <thead>
         <tr>
           <th>카테고리</th>
@@ -209,11 +238,10 @@ select.form-control { background: white; cursor: pointer; }
         </tr>
       </thead>
       <tbody id="finished-tbody"></tbody>
-    </table>
+    </table></div>
   </div>
 
   <!-- 11번가 재고 파일 업로드 -->
-
   <div class="card">
     <div class="card-title">🏬 11번가 재고 파일 업데이트</div>
     <div class="info-box">
@@ -257,7 +285,6 @@ select.form-control { background: white; cursor: pointer; }
 </div>
 
 <!-- ══════════════════ 탭2: 생산 입력 ══════════════════ -->
-
 <div id="tab-production" class="content">
   <div class="grid2">
     <div class="card">
@@ -289,43 +316,60 @@ select.form-control { background: white; cursor: pointer; }
           <option value="gift_set_4">4종 선물세트</option>
           <option value="gift_set_2">2종 선물세트</option>
           </optgroup>
+          <optgroup label="── 합포장 (12입→2입/3입) ──">
+          <option value="combo_lima500_2">리마빈 500g 12입→2입 합포장</option>
+          <option value="combo_lima500_3">리마빈 500g 12입→3입 합포장</option>
+          <option value="combo_powder300_5">파우더 300g 10입→5입 합포장</option>
+          </optgroup>
         </select>
       </div>
       <div class="form-group">
         <label class="form-label">생산 수량 (박스)</label>
         <input type="number" class="form-control" id="prod-qty" min="1" placeholder="예: 100" oninput="updateProdBOM()">
       </div>
+      <div class="form-group" id="combo-box-group" style="display:none">
+        <label class="form-label">사용 박스 선택 (임가공 전용)</label>
+        <select class="form-control" id="combo-box-select">
+          <option value="">-- 박스 선택 --</option>
+          <option value="sub_box_11st_1">11번가 자체박스 1호</option>
+<option value="sub_box_11st_2">11번가 자체박스 2호</option>
+<option value="sub_box_11st_3">11번가 자체박스 3호</option>
+<option value="sub_box_11st_4">11번가 자체박스 4호</option>
+<option value="sub_box_11st_5">11번가 자체박스 5호</option>
+<option value="sub_box_11st_6">11번가 자체박스 6호</option>
+<option value="sub_box_11st_7">11번가 자체박스 7호</option>
+<option value="sub_box_11st_8">11번가 자체박스 8호</option>
+<option value="sub_box_11st_9">11번가 자체박스 9호</option>
+<option value="sub_box_11st_10">11번가 자체박스 10호</option>
+<option value="sub_box_11st_11">11번가 자체박스 11호</option>
+<option value="sub_box_11st_12">11번가 자체박스 12호</option>
+        </select>
+      </div>
       <div id="prod-bom-preview" style="margin-bottom:14px"></div>
       <div id="prod-alert"></div>
       <button class="btn btn-success" onclick="registerProduction()">✅ 생산 등록</button>
     </div>
 
-```
-<div class="card">
-  <div class="card-title">📋 최대 생산 가능 수량</div>
-  <table>
-    <thead><tr><th>완성품</th><th>입수</th><th>최대 생산</th><th>제한 요인</th></tr></thead>
-    <tbody id="max-prod-tbody"></tbody>
-  </table>
-</div>
-```
-
+    <div class="card hide-mobile">
+      <div class="card-title">📋 최대 생산 가능 수량</div>
+      <table>
+        <thead><tr><th>완성품</th><th>입수</th><th>최대 생산</th><th>제한 요인</th></tr></thead>
+        <tbody id="max-prod-tbody"></tbody>
+      </table>
+    </div>
   </div>
 </div>
 
 <!-- ══════════════════ 탭3: 판매 입력 ══════════════════ -->
-
 <div id="tab-sales" class="content">
 
   <!-- 서브탭 -->
-
   <div style="display:flex; gap:8px; margin-bottom:16px">
     <button class="subtab active" id="subtab-file" onclick="switchSubtab('file')">📂 파일 업로드 (자동)</button>
     <button class="subtab" id="subtab-manual" onclick="switchSubtab('manual')">✏️ 수동 입력</button>
   </div>
 
   <!-- ── 서브탭1: 파일 업로드 ── -->
-
   <div id="subcontent-file">
     <div class="card">
       <div class="card-title">📂 판매 파일 자동 업로드</div>
@@ -360,34 +404,30 @@ select.form-control { background: white; cursor: pointer; }
         </div>
       </div>
 
-```
-  <div id="parse-preview" style="display:none">
-    <div class="section-title">파싱 결과 미리보기</div>
-    <table>
-      <thead><tr><th>채널</th><th>통일상품명</th><th>입수</th><th>판매수량(박스)</th><th>실판매봉수</th></tr></thead>
-      <tbody id="parse-tbody"></tbody>
-    </table>
-    <div style="margin-top:12px; display:flex; gap:10px">
-      <button class="btn btn-danger" onclick="applySales()">✅ 재고 차감 적용</button>
-      <button class="btn" style="background:#eee;color:#555" onclick="resetFiles()">🔄 초기화</button>
+      <div id="parse-preview" style="display:none">
+        <div class="section-title">파싱 결과 미리보기</div>
+        <table>
+          <thead><tr><th>채널</th><th>통일상품명</th><th>입수</th><th>판매수량(박스)</th><th>실판매봉수</th></tr></thead>
+          <tbody id="parse-tbody"></tbody>
+        </table>
+        <div style="margin-top:12px; display:flex; gap:10px">
+          <button class="btn btn-danger" onclick="applySales()">✅ 재고 차감 적용</button>
+          <button class="btn" style="background:#eee;color:#555" onclick="resetFiles()">🔄 초기화</button>
+        </div>
+      </div>
+      <div id="apply-alert" style="margin-top:10px"></div>
     </div>
-  </div>
-  <div id="apply-alert" style="margin-top:10px"></div>
-</div>
 
-<div class="card">
-  <div class="card-title">📊 현재 완성품 재고 현황</div>
-  <table>
-    <thead><tr><th>완성품명</th><th>입수</th><th>보관 위치</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
-    <tbody id="sale-stock-tbody"></tbody>
-  </table>
-</div>
-```
-
+    <div class="card">
+      <div class="card-title">📊 현재 완성품 재고 현황</div>
+      <table>
+        <thead><tr><th>완성품명</th><th>입수</th><th>보관 위치</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
+        <tbody id="sale-stock-tbody"></tbody>
+      </table>
+    </div>
   </div>
 
   <!-- ── 서브탭2: 수동 입력 ── -->
-
   <div id="subcontent-manual" style="display:none">
     <div class="grid2">
       <div class="card">
@@ -455,22 +495,18 @@ select.form-control { background: white; cursor: pointer; }
         <button class="btn btn-danger" onclick="registerSale()">🛒 판매 등록</button>
       </div>
 
-```
-  <div class="card">
-    <div class="card-title">📊 현재 완성품 재고 현황</div>
-    <table>
-      <thead><tr><th>완성품명</th><th>입수</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
-      <tbody id="sale-stock-tbody2"></tbody>
-    </table>
-  </div>
-</div>
-```
-
+      <div class="card">
+        <div class="card-title">📊 현재 완성품 재고 현황</div>
+        <table>
+          <thead><tr><th>완성품명</th><th>입수</th><th>재고(박스)</th><th>봉/통수</th></tr></thead>
+          <tbody id="sale-stock-tbody2"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ══════════════════ 탭4: 원부자재 ══════════════════ -->
-
 <div id="tab-materials" class="content">
   <div class="grid2">
     <div class="card">
@@ -515,6 +551,8 @@ select.form-control { background: white; cursor: pointer; }
           <option value="sub_barcode10">300g 10입 바코드스티커 (개)</option>
           <option value="sub_gift4">선물케이스 4입용박스 (개)</option>
           <option value="sub_giftpad">선물용 케이스(패드) (개)</option>
+          <option value="sub_sheetji">시트지 (개)</option>
+          <option value="sub_box_11st_1">1호박스 (개)</option>
         </select>
       </div>
       <div class="form-group" style="margin:0; flex:0.5; min-width:100px">
@@ -528,7 +566,6 @@ select.form-control { background: white; cursor: pointer; }
 </div>
 
 <!-- ══════════════════ 탭5: 이력 ══════════════════ -->
-
 <div id="tab-history" class="content">
   <div class="card">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px">
@@ -716,6 +753,20 @@ let materials = {
   sub_barcode_bq: { name:'바코드라벨 (블랙퀴노아)',    unit:'개',  stock:900,   loc:'지웰 창고' },
   sub_barcode_rq: { name:'바코드라벨 (레드퀴노아)',    unit:'개',  stock:900,   loc:'지웰 창고' },
   sub_barcode_be: { name:'바코드라벨 (블랙아이즈빈)',  unit:'개',  stock:900,   loc:'지웰 창고' },
+  // 합포장 자재
+  sub_sheetji:     { name:'시트지',                   unit:'개',  stock:0,     loc:'지웰 창고' },
+  sub_box_11st_1: { name:'11번가 자체박스 1호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_2: { name:'11번가 자체박스 2호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_3: { name:'11번가 자체박스 3호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_4: { name:'11번가 자체박스 4호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_5: { name:'11번가 자체박스 5호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_6: { name:'11번가 자체박스 6호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_7: { name:'11번가 자체박스 7호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_8: { name:'11번가 자체박스 8호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_9: { name:'11번가 자체박스 9호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_10: { name:'11번가 자체박스 10호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_11: { name:'11번가 자체박스 11호', unit:'개', stock:0, loc:'지웰 창고' },
+  sub_box_11st_12: { name:'11번가 자체박스 12호', unit:'개', stock:0, loc:'지웰 창고' },
 };
 
 // BOM 정의 (박스 1개 생산 기준, 원물은 g단위)
@@ -753,6 +804,36 @@ const BOM = {
       { key:'raw_powder', g:1000 },
     ],
     subs:{ sub_container:4, sub_cap:4, sub_seal:4, sub_label:4, sub_barcode_lima:1, sub_gift4:1, sub_giftpad:1 }
+  },
+  // ── 합포장 (12입 해체 → 낱봉 재사용) ──────────────────────
+  // 원물/파우치 차감 없음 (기존 완성품 재고에서 차감)
+  // 완성품 재고: lima500_12 -1박스(12봉), lima500_2 +6박스 / lima500_3 +4박스
+  combo_lima500_2: {
+    isCombo: true,
+    srcKey: 'lima500_12',  // 해체할 12입 박스
+    srcQty: 1,             // 12입 1박스 해체
+    dstKey: 'lima500_2',   // 만들어질 완성품
+    dstQty: 6,             // 12봉 ÷ 2 = 6박스
+    subs: { sub_box_11st_1:6, sub_sheetji:6, sub_barcode_lima:6 },
+    subPerBox: true,        // 박스당 자재 소모
+  },
+  combo_lima500_3: {
+    isCombo: true,
+    srcKey: 'lima500_12',
+    srcQty: 1,
+    dstKey: 'lima500_3',
+    dstQty: 4,             // 12봉 ÷ 3 = 4박스
+    subs: { sub_box_11st_1:4, sub_sheetji:4, sub_barcode_lima:4 },
+    subPerBox: true,
+  },
+  combo_powder300_5: {
+    isCombo: true,
+    srcKey: 'powder300_10',  // 10입 해체
+    srcQty: 1,
+    dstKey: 'powder300_5',
+    dstQty: 2,              // 10봉 ÷ 5 = 2박스
+    subs: { sub_box_11st_1:2, sub_sheetji:2, sub_barcode_lima:2 },
+    subPerBox: true,
   },
 };
 
@@ -918,6 +999,73 @@ function registerProduction() {
   const bom = BOM[key];
   const item = finishedStock[key];
 
+  // ── 합포장 처리 ──────────────────────────────────────────
+  if (bom.isCombo) {
+    const src = finishedStock[bom.srcKey];
+    const dst = finishedStock[bom.dstKey];
+    const totalSrc = bom.srcQty * qty;
+    const totalDst = bom.dstQty * qty;
+
+    if (src.stock < totalSrc) {
+      document.getElementById('prod-alert').innerHTML =
+        `<div class="alert alert-danger">❌ ${src.name} ${src.qty}입 재고 부족: ${num(totalSrc)}박스 필요, ${num(src.stock)}박스 보유</div>`;
+      return;
+    }
+
+    // 선택한 박스 확인
+    const selectedBox = document.getElementById('combo-box-select').value;
+    if (!selectedBox) {
+      document.getElementById('prod-alert').innerHTML =
+        '<div class="alert alert-danger">❌ 사용할 박스 호수를 선택해주세요</div>';
+      return;
+    }
+    if (!materials[selectedBox]) {
+      document.getElementById('prod-alert').innerHTML =
+        '<div class="alert alert-danger">❌ 선택한 박스를 찾을 수 없어요</div>';
+      return;
+    }
+
+    // 부자재 확인 (선택 박스 포함)
+    const allSubs = { ...bom.subs, [selectedBox]: totalDst };
+    for (const [subKey, subQty] of Object.entries(allSubs)) {
+      const needed = subKey === selectedBox ? subQty : subQty * qty;
+      if (materials[subKey] && materials[subKey].stock < needed) {
+        document.getElementById('prod-alert').innerHTML =
+          `<div class="alert alert-danger">❌ ${materials[subKey].name} 부족: ${num(needed)}개 필요, ${num(materials[subKey].stock)}개 보유</div>`;
+        return;
+      }
+    }
+
+    // 차감/증가 실행
+    src.stock -= totalSrc;
+    dst.stock += totalDst;
+    for (const [subKey, subQty] of Object.entries(bom.subs)) {
+      materials[subKey].stock -= subQty * qty;
+    }
+    // 선택한 박스 차감
+    materials[selectedBox].stock -= totalDst;
+
+    const sheetUpdates = [
+      { sheet:'finished', key:bom.srcKey, stock:src.stock },
+      { sheet:'finished', key:bom.dstKey, stock:dst.stock },
+      ...Object.keys(bom.subs).map(k => ({ sheet:'materials', key:k, stock:materials[k].stock })),
+      { sheet:'materials', key:selectedBox, stock:materials[selectedBox].stock },
+    ];
+    const now = new Date().toLocaleString('ko-KR');
+    const histEntry = { time:now, type:'prod', desc:`[합포장] ${src.name} ${src.qty}입 ${num(totalSrc)}박스 해체 → ${dst.name} ${dst.qty}입 ${num(totalDst)}박스 생성` };
+    history.unshift({ type:'prod', time:now, desc:histEntry.desc });
+    await saveToSheet(sheetUpdates, histEntry);
+
+    document.getElementById('prod-qty').value = '';
+    document.getElementById('prod-bom-preview').innerHTML = '';
+    renderProduction();
+    showCompleteModal('합포장 완료! 📦',
+      `${src.name} ${src.qty}입 ${num(totalSrc)}박스 해체
+→ ${dst.name} ${dst.qty}입 ${num(totalDst)}박스 생성 완료`);
+    return;
+  }
+
+  // ── 일반 생산 처리 ──────────────────────────────────────────
   // 원물 차감 (로스 없음) - 단일 or 복수
   if (bom.multiRaw) {
     for (const r of bom.multiRaw) {
@@ -1609,7 +1757,6 @@ renderProduction();
 </script>
 
 <!-- 완료 모달 -->
-
 <div id="complete-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:99999;align-items:center;justify-content:center">
   <div style="background:white;border-radius:16px;padding:36px 40px;text-align:center;box-shadow:0 8px 32px rgba(0,0,0,0.2);max-width:360px;width:90%;margin:0 16px">
     <div style="font-size:48px;margin-bottom:12px">✅</div>
